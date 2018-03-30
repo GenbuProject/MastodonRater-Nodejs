@@ -1,0 +1,33 @@
+{
+	"name": "mastodon-rater",
+	"version": "1.0.0",
+	"description": "An analyzer tool for mastodon users",
+	"keywords": [
+		"MastodonRater",
+		"Mastodon",
+		"マストドン",
+		"統計さん"
+	],
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/GenbuProject/MastodonRater.git"
+	},
+	"homepage": "https://github.com/GenbuProject/MastodonRater#readme",
+	"bugs": {
+		"url": "https://github.com/GenbuProject/MastodonRater/issues"
+	},
+	"author": {
+		"name": "Genbu Hase"
+	},
+	"license": "MIT",
+	"main": "app.js",
+	"scripts": {
+		"start": "node app.js"
+	},
+	"dependencies": {
+		"body-parser": "^1.18.2",
+		"express": "^4.16.3",
+		"mastodon-api": "^1.3.0",
+		"mysql": "^2.15.0"
+	}
+}
