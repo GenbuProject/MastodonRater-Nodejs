@@ -5,8 +5,8 @@
 
 マストドンのマストドナーによるマストドナーのための統計ツール
 
-## Languages
-* [日本語 | Japanese](/README[Japanese].md)
+## 他の言語 | Languages
+* [English | 英語](/README.md)
 
 ## 概要 | Overview
 当サービスは、MastodonAPIを利用して様々な指標を算出するツールです。

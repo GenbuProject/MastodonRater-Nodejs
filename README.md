@@ -5,8 +5,8 @@
 
 An analyzer of mastodon, for the users, by the users
 
-## 他の言語 | Languages
-* [English | 英語](/README.md)
+## Languages
+* [日本語 | Japanese](/README[Japanese].md)
 
 ## Overview
 MastodonRater can analyze you with Mastodon.
