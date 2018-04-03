@@ -26,6 +26,6 @@ let app = express();
 
 
 
-let listener = app.listen(8001, () => {
+let listener = app.listen((process.env.PORT || 8001), () => {
 	console.log(`[MastodonRater] I'm running on port:${listener.address().port}✨`);
 });
