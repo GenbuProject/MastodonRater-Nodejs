@@ -1,0 +1,14 @@
+{
+	"name": "MastodonRater",
+	"description": "An analyzer tool for mastodon users",
+
+	"keywords": [
+		"MastodonRater",
+		"Mastodon",
+		"マストドン",
+		"統計さん"
+	],
+
+	"repository": "https://github.com/GenbuProject/MastodonRater-Nodejs",
+	"logo": "https://genbuproject.github.io/favicon.png"
+}
