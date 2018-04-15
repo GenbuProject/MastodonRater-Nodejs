@@ -1,6 +1,6 @@
 # MastodonRater
 
-[![Build Status](https://travis-ci.org/GenbuProject/MastodonRater.svg)](https://travis-ci.org/GenbuProject/MastodonRater)
+[![Build Status](https://travis-ci.org/GenbuProject/MastodonRater.svg)](https://travis-ci.org/GenbuProject/MastodonRater-Nodejs)
 [![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
 An analyzer of mastodon, for the users, by the users
@@ -34,3 +34,6 @@ Please contact me if you have any questions or something.
 
 Please contact me if you want to enable your instance to use.
 * [Genbu Project](mailto:genbuproject@gmail.com)
+
+## License
+[MIT LICENSE](/LICENSE)

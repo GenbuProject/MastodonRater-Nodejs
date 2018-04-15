@@ -1,6 +1,6 @@
 # MastodonRater
 
-[![Build Status](https://travis-ci.org/GenbuProject/MastodonRater.svg)](https://travis-ci.org/GenbuProject/MastodonRater)
+[![Build Status](https://travis-ci.org/GenbuProject/MastodonRater.svg)](https://travis-ci.org/GenbuProject/MastodonRater-Nodejs)
 [![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
 マストドンのマストドナーによるマストドナーのための統計ツール
@@ -34,3 +34,6 @@ Herokuへのデプロイ方法は[こちら](/DeployToHeroku.md)を参照して�
 
 ご自分のインスタンスへの反映は、お手数お掛け致しますがこちらまでご連絡下さい。
 * [Genbu Project](mailto:genbuproject@gmail.com)
+
+## ライセンス | License
+[MIT LICENSE](/LICENSE)
