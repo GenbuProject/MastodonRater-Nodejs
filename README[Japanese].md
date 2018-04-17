@@ -28,8 +28,9 @@ Herokuへのデプロイ方法は[こちら](/DeployToHeroku.md)を参照して�
 
 ## 連絡先 | Contact
 何かご要望などありましたら、こちらまでご気軽にご連絡下さい。
-* [@ProgrammerGenboo(Yづドン)](https://mstdn.y-zu.org/@ProgrammerGenboo)
 * [@ProgrammerGenboo(神崎丼)](https://knzk.me/@ProgrammerGenboo)
+* [@ProgrammerGenboo(板橋丼)](https://itabashi.0j0.jp/@ProgrammerGenboo)
+* [@ProgrammerGenboo(Yづドン)](https://mstdn.y-zu.org/@ProgrammerGenboo)
 * [どっかのGenboo。(Google+)](https://plus.google.com/106666684430101995501)
 
 ご自分のインスタンスへの反映は、お手数お掛け致しますがこちらまでご連絡下さい。
