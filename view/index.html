@@ -4,6 +4,7 @@
 	<Head>
 		<Meta Charset = "UTF-8" />
 		<Title>MastodonRater</Title>
+		<Link Rel = "Shortcut Icon" Href = "favicon.ico" />
 
 		<!-- Global site tag (gtag.js) - Google Analytics -->
 		<Script Src = "https://www.googletagmanager.com/gtag/js?id=UA-88656260-3" Async></Script>
@@ -31,77 +32,96 @@
 					<Span Class = "brand-logo center">MastodonRater</Span>
 
 					<UL Class = "right">
-						<Li><A Class = "dropdown-target" Data-Target = "Header-Languages">Languages<I Class = "material-icons right">arrow_drop_down</I></A></Li>
-						<UL ID = "Header-Languages" Class = "dropdown-content">
+						<Li>
+							<A Class = "dropdown-target" Data-Target = "header-languages">
+								<Span Data-I18n = "header.languages">Languages</Span>
+								<I Class = "material-icons right">arrow_drop_down</I>
+							</A>
+						</Li>
+
+						<UL ID = "header-languages" Class = "dropdown-content">
 							<Li><A Href = "?lang=ja">日本語</A></Li>
 							<Li><A Href = "?lang=en">English</A></Li>
 						</UL>
 						
-						<Li><A Href = "#">ログアウト<I Class = "material-icons right">person</I></A></Li>
+						<Li ID = "header-signOut">
+							<A Href = "#">
+								<Span Data-I18n = "header.signOut">Sign Out</Span>
+								<I Class = "material-icons right">person</I>
+							</A>
+						</Li>
 					</UL>
 				</Div>
 			</Nav>
 		</Header>
 
 		<Main>
-			<Article>
-				MastodonRaterへようこそ！<Br />
-				以下よりご利用になるサービスをお選び下さい。
-			</Article>
+			<Section ID = "main-signInPanel">
 
-			<UL Class = "collection">
-				<Li Class = "collection-header">
-					<Div Class = "input-field">
-						<Select>
-							<Option Value = "public">公開</Option>
-							<Option Value = "unlisted">未収載</Option>
-							<Option Value = "private">非公開</Option>
-							<Option Value = "limited">限定公開(一部のインスタンスのみ)</Option>
-							<Option Value = "direct">ダイレクト</Option>
-						</Select>
+			</Section>
 
-						<Label>公開範囲</Label>
-					</Div>
-				</Li>
+			<Section ID = "main-controlPanel">
+				<Article Data-I18n = "controlPanel.details">
+					MastodonRaterへようこそ！<Br />
+					以下よりご利用になるサービスをお選び下さい。
+				</Article>
 
-				<Li Class = "collection-item avatar">
-					<I Class = "material-icons circle">chat</I>
+				<UL Class = "collection">
+					<Li Class = "collection-header">
+						<Div Class = "input-field">
+							<Select ID = "main-controlPanel-privacy">
+								<Option Value = "public" Data-I18n = "controlPanel.privacy.public">公開</Option>
+								<Option Value = "unlisted" Data-I18n = "controlPanel.privacy.unlisted">未収載</Option>
+								<Option Value = "private" Data-I18n = "controlPanel.privacy.private">非公開</Option>
+								<Option Value = "limited" Data-I18n = "controlPanel.privacy.limited">限定公開(一部のインスタンスのみ)</Option>
+								<Option Value = "direct" Data-I18n = "controlPanel.privacy.direct">ダイレクト</Option>
+							</Select>
 
-					<Span Class = "title">Toot Rater</Span>
-					<P>
-						サーバー全体とのトゥート数比
-					</P>
+							<Label Data-I18n = "controlPanel.privacy">公開範囲</Label>
+						</Div>
+					</Li>
 
-					<A Class = "secondary-content" Href = "#"><I Class = "material-icons">launch</I></A>
-				</Li>
+					<Li Class = "collection-item avatar">
+						<I Class = "material-icons circle">chat</I>
 
-				<Li Class = "collection-item avatar">
-					<I Class = "material-icons circle">subject</I>
+						<Span Class = "title">Toot Rater</Span>
+						<P Data-I18n = "controlPanel.tootRater">
+							サーバー全体とのトゥート数比
+						</P>
 
-					<Span Class = "title">TPD(Toots Per Day)</Span>
-					<P>
-						1日当たりの平均トゥート数
-					</P>
+						<A Class = "secondary-content" Href = "#"><I Class = "material-icons">launch</I></A>
+					</Li>
 
-					<A Class = "secondary-content" Href = "#"><I Class = "material-icons">launch</I></A>
-				</Li>
+					<Li Class = "collection-item avatar">
+						<I Class = "material-icons circle">subject</I>
 
-				<Li Class = "collection-item avatar">
-					<I Class = "material-icons circle">people</I>
+						<Span Class = "title">TPD(Toots Per Day)</Span>
+						<P Data-I18n = "controlPanel.tpd">
+							1日当たりの平均トゥート数
+						</P>
 
-					<Span Class = "title">Relevance Analyzer</Span>
-					<P>
-						ユーザーとの親密度
-					</P>
+						<A Class = "secondary-content" Href = "#"><I Class = "material-icons">launch</I></A>
+					</Li>
 
-					<A Class = "secondary-content" Href = "#"><I Class = "material-icons">launch</I></A>
-				</Li>
-			</UL>
+					<Li Class = "collection-item avatar">
+						<I Class = "material-icons circle">people</I>
 
-			<Article>
-				不具合や分からない事などございましたら、お気軽に<A Href = "https://itabashi.0j0.jp/@ProgrammerGenboo" Target = "_blank">こちら</A>までご連絡下さい。<Br />
-				Mastodonのアカウントをお持ちでなければ<A Href = "mailto:programmergenboo@gmail.com">こちら</A>もどうぞです✌︎('ω'✌︎ )
-			</Article>
+						<Span Class = "title">Relevance Analyzer</Span>
+						<P Data-I18n = "controlPanel.relevanceAnalyzer">
+							ユーザーとの親密度
+						</P>
+
+						<A Class = "secondary-content" Href = "#"><I Class = "material-icons">launch</I></A>
+					</Li>
+				</UL>
+			</Section>
+
+			<Section ID = "main-contactPanel">
+				<Article Data-I18n = "contactPanel.details">
+					不具合や分からない事などございましたら、お気軽に<A Href = "https://itabashi.0j0.jp/@ProgrammerGenboo" Target = "_blank" Data-I18n = "">こちら</A>までご連絡下さい。<Br />
+					Mastodonのアカウントをお持ちでなければ<A Href = "mailto:programmergenboo@gmail.com">こちら</A>もどうぞです✌︎('ω'✌︎ )
+				</Article>
+			</Section>
 		</Main>
 	</Body>
 </HTML>
