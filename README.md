@@ -1,6 +1,6 @@
 # MastodonRater
 
-[![Build Status](https://travis-ci.org/GenbuProject/MastodonRater.svg)](https://travis-ci.org/GenbuProject/MastodonRater-Nodejs)
+[![Build Status](https://travis-ci.org/GenbuProject/MastodonRater-Nodejs.svg)](https://travis-ci.org/GenbuProject/MastodonRater-Nodejs)
 [![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
 An analyzer of mastodon, for the users, by the users
@@ -28,8 +28,8 @@ Toots relevance with your followers.
 
 ## Contact
 Please contact me if you have any questions or something.
-* [@ProgrammerGenboo(Knzk.me)](https://knzk.me/@ProgrammerGenboo)
 * [@ProgrammerGenboo(Itabashi-don)](https://itabashi.0j0.jp/@ProgrammerGenboo)
+* [@ProgrammerGenboo(Knzk.me)](https://knzk.me/@ProgrammerGenboo)
 * [@ProgrammerGenboo(Y-zu)](https://mstdn.y-zu.org/@ProgrammerGenboo)
 * [ProgrammerGenboo(Google+)](https://plus.google.com/106666684430101995501)
 
