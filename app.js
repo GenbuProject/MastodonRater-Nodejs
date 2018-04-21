@@ -18,8 +18,13 @@ let app = express();
 	/**
 	 * Gets whether MastodonRater exists in the instance
 	 */
-	app.get("/app", (req, res) => {
+	app.get("/api/app", (req, res) => {
 		const { instance } = req.query;
+
+		if (!instance) {
+			res.status(400).end(R.API_END_WITH_ERROR(new TypeError("A query, 'instance' is required.")));
+			return;
+		}
 
 		if (!DB.db) {
 			res.status(400).end(R.API_END_WITH_ERROR(R.ERROR.CONST.DB_URI));
@@ -32,11 +37,11 @@ let app = express();
 	/**
 	 * Generates MastodonRater in the instance
 	 */
-	app.post("/app", (req, res) => {
+	app.post("/api/app", (req, res) => {
 		const { instance, redirectTo } = req.body;
 		
 		if (!instance || !redirectTo) {
-			res.status(400).end(R.API_END_WITH_ERROR(new TypeError("2 payloads, instance and redirectTo, are required.")));
+			res.status(400).end(R.API_END_WITH_ERROR(new TypeError("2 payloads, 'instance' and 'redirectTo' are required.")));
 			return;
 		}
 
@@ -64,13 +69,13 @@ let app = express();
 	/**
 	 * Gets user's token from received code
 	 */
-	app.get("/token", (req, res) => {
+	app.get("/api/token", (req, res) => {
 		const { code, client_id, client_secret } = req.query;
 
 		Mastodon.getAccessToken(client_id, client_secret, code).then(accessToken => {
 			res.end(R.API_END({ accessToken }));
 		}).catch(error => {
-			res.status(400).end(R.API_END_WITH_ERROR(new TypeError("A param, code is invalid.")));
+			res.status(400).end(R.API_END_WITH_ERROR(new TypeError("A query, 'code' is invalid.")));
 			return;
 		});
 	});
