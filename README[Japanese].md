@@ -1,6 +1,6 @@
 # MastodonRater
 
-[![Build Status](https://travis-ci.org/GenbuProject/MastodonRater.svg)](https://travis-ci.org/GenbuProject/MastodonRater-Nodejs)
+[![Build Status](https://travis-ci.org/GenbuProject/MastodonRater-Nodejs.svg)](https://travis-ci.org/GenbuProject/MastodonRater-Nodejs)
 [![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
 マストドンのマストドナーによるマストドナーのための統計ツール
@@ -28,8 +28,8 @@ Herokuへのデプロイ方法は[こちら](/DeployToHeroku.md)を参照して�
 
 ## 連絡先 | Contact
 何かご要望などありましたら、こちらまでご気軽にご連絡下さい。
-* [@ProgrammerGenboo(神崎丼)](https://knzk.me/@ProgrammerGenboo)
 * [@ProgrammerGenboo(板橋丼)](https://itabashi.0j0.jp/@ProgrammerGenboo)
+* [@ProgrammerGenboo(神崎丼)](https://knzk.me/@ProgrammerGenboo)
 * [@ProgrammerGenboo(Yづドン)](https://mstdn.y-zu.org/@ProgrammerGenboo)
 * [どっかのGenboo。(Google+)](https://plus.google.com/106666684430101995501)
 
