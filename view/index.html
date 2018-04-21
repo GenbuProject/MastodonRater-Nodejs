@@ -15,12 +15,93 @@
 		  gtag('config', 'UA-88656260-3');
 		</Script>
 
-		<Script Src = "main.js"></Script>
+		<Link Rel = "StyleSheet" Href = "https://fonts.googleapis.com/icon?family=Roboto" />
+		<Link Rel = "StyleSheet" Href = "https://fonts.googleapis.com/icon?family=Material+Icons" />
+		<Link Rel = "StyleSheet" Href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-alpha.4/css/materialize.min.css" />
+		<Script Src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-alpha.4/js/materialize.min.js"></Script>
+
+		<Script Src = "main.js" Defer></Script>
+		<Link Rel = "StyleSheet" Href = "main.css" />
 	</Head>
 
 	<Body>
-		<!--
-			location.href.replace(location.search, "") + "token"
-		-->
+		<Header Class = "navbar-fixed">
+			<Nav>
+				<Div Class = "nav-wrapper">
+					<Span Class = "brand-logo center">MastodonRater</Span>
+
+					<UL Class = "right">
+						<Li><A Class = "dropdown-target" Data-Target = "Header-Languages">Languages<I Class = "material-icons right">arrow_drop_down</I></A></Li>
+						<UL ID = "Header-Languages" Class = "dropdown-content">
+							<Li><A Href = "?lang=ja">日本語</A></Li>
+							<Li><A Href = "?lang=en">English</A></Li>
+						</UL>
+						
+						<Li><A Href = "#">ログアウト<I Class = "material-icons right">person</I></A></Li>
+					</UL>
+				</Div>
+			</Nav>
+		</Header>
+
+		<Main>
+			<Article>
+				MastodonRaterへようこそ！<Br />
+				以下よりご利用になるサービスをお選び下さい。
+			</Article>
+
+			<UL Class = "collection">
+				<Li Class = "collection-header">
+					<Div Class = "input-field">
+						<Select>
+							<Option Value = "public">公開</Option>
+							<Option Value = "unlisted">未収載</Option>
+							<Option Value = "private">非公開</Option>
+							<Option Value = "limited">限定公開(一部のインスタンスのみ)</Option>
+							<Option Value = "direct">ダイレクト</Option>
+						</Select>
+
+						<Label>公開範囲</Label>
+					</Div>
+				</Li>
+
+				<Li Class = "collection-item avatar">
+					<I Class = "material-icons circle">chat</I>
+
+					<Span Class = "title">Toot Rater</Span>
+					<P>
+						サーバー全体とのトゥート数比
+					</P>
+
+					<A Class = "secondary-content" Href = "#"><I Class = "material-icons">launch</I></A>
+				</Li>
+
+				<Li Class = "collection-item avatar">
+					<I Class = "material-icons circle">subject</I>
+
+					<Span Class = "title">TPD(Toots Per Day)</Span>
+					<P>
+						1日当たりの平均トゥート数
+					</P>
+
+					<A Class = "secondary-content" Href = "#"><I Class = "material-icons">launch</I></A>
+				</Li>
+
+				<Li Class = "collection-item avatar">
+					<I Class = "material-icons circle">people</I>
+
+					<Span Class = "title">Relevance Analyzer</Span>
+					<P>
+						ユーザーとの親密度
+					</P>
+
+					<A Class = "secondary-content" Href = "#"><I Class = "material-icons">launch</I></A>
+				</Li>
+			</UL>
+
+			<Article>
+				不具合や分からない事などございましたら、お気軽に<A Href = "https://itabashi.0j0.jp/@ProgrammerGenboo" Target = "_blank">こちら</A>までご連絡下さい。<Br />
+				Mastodonのアカウントをお持ちでなければ<A Href = "mailto:programmergenboo@gmail.com">こちら</A>もどうぞです✌︎('ω'✌︎ )
+			</Article>
+		</Main>
 	</Body>
 </HTML>
