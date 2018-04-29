@@ -1,0 +1,16 @@
+{
+	"header.languages": "言語",
+	"header.signOut": "ログアウト",
+
+	"controlPanel.details": [
+		"MastodonRaterへようこそ！",
+		"以下よりご利用になるサービスをお選びください。"
+	],
+
+	"controlPanel.privacy": "公開範囲",
+	"controlPanel.privacy.public": "公開",
+	"controlPanel.privacy.unlisted": "未収載",
+	"controlPanel.privacy.private": "非公開",
+	"controlPanel.privacy.limited": "限定公開(※一部のインスタンスのみ)",
+	"controlPanel.privacy.direct": "ダイレクト"
+}
