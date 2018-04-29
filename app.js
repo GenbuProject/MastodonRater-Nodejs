@@ -1,7 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const Mastodon = require("mastodon-api");
-const Database = require("./lib/Database");
+const MongoHandler = require("./lib/MongoHandler");
 const R = require("./lib/Resources");
 
 //This code is for only developing
@@ -9,11 +9,12 @@ require("dotenv").config();
 
 
 
-const DB = new Database(process.env.DB_URI);
+const Mongo = new MongoHandler(process.env.DB_URI, process.env.DB_NAME);
 
 let app = express();
 	app.use(bodyParser.json());
 	app.use("/", express.static(`${__dirname}/view`));
+	app.use("/locales", express.static(`${__dirname}/locales`));
 
 	/**
 	 * Gets whether MastodonRater exists in the instance
@@ -26,12 +27,12 @@ let app = express();
 			return;
 		}
 
-		if (!DB.db) {
-			res.status(400).end(R.API_END_WITH_ERROR(R.ERROR.CONST.DB_URI));
+		if (!Mongo.db) {
+			res.status(400).end(R.API_END_WITH_ERROR(R.ERROR.ENV.DB_URI));
 			return;
 		}
 
-		DB.existApp(instance).then(exists => res.end(R.API_END({ exists })));
+		Mongo.existApp(instance).then(exists => res.end(R.API_END({ exists })));
 	});
 
 	/**
@@ -45,7 +46,7 @@ let app = express();
 			return;
 		}
 
-		DB.existApp(instance).then(exists => {
+		Mongo.existApp(instance).then(exists => {
 			if (exists) {
 				res.end(R.API_END());
 			} else {
@@ -56,7 +57,7 @@ let app = express();
 					const secretId = info.client_secret;
 
 					appInfo = Object.assign({}, { id, redirectTo, clientId, secretId });
-					DB.storeApp(instance, appInfo);
+					Mongo.storeApp(instance, appInfo);
 
 					return Mastodon.getAuthorizationUrl(clientId, secretId, instance, "read write", redirectTo);
 				}).then(authUrl => {

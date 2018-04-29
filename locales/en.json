@@ -1,0 +1,16 @@
+{
+	"header.languages": "Languages",
+	"header.signOut": "Sign Out",
+
+	"controlPanel.details": [
+		"Welcome to MastodonRater!",
+		"Feel free to choose any services, please."
+	],
+
+	"controlPanel.privacy": "Privacy",
+	"controlPanel.privacy.public": "Public",
+	"controlPanel.privacy.unlisted": "Unlisted",
+	"controlPanel.privacy.private": "Private",
+	"controlPanel.privacy.limited": "Limited(Only for implemented instances)",
+	"controlPanel.privacy.direct": "Direct"
+}
