@@ -1,6 +1,9 @@
 {
 	"header.languages": "Languages",
+	"header.signIn": "Sign In",
 	"header.signOut": "Sign Out",
+
+	"signInPanel.details": "Please sign in with your Mastodon account before using MastodonRater.",
 
 	"controlPanel.details": [
 		"Welcome to MastodonRater!",

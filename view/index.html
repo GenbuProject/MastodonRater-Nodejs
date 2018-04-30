@@ -48,9 +48,9 @@
 							<Li><A Href = "?lang=en">English</A></Li>
 						</UL>
 						
-						<Li ID = "header-signOut">
+						<Li ID = "header-signInOut">
 							<A Href = "#">
-								<Span Locale-Message = "header.signOut">Sign Out</Span>
+								<Span Locale-Message = "header.signIn">Sign In</Span>
 								<I Class = "material-icons right">person</I>
 							</A>
 						</Li>
@@ -72,20 +72,22 @@
 				<Li><A Href = "?lang=en">English</A></Li>
 			</UL>
 			
-			<Li ID = "sidebar-signOut">
+			<Li ID = "sidebar-signInOut">
 				<A Href = "#">
-					<Span Locale-Message = "header.signOut">Sign Out</Span>
+					<Span Locale-Message = "header.signIn">Sign In</Span>
 					<I Class = "material-icons right">person</I>
 				</A>
 			</Li>
 		</UL>
 
 		<Main>
-			<Section ID = "signInPanel">
-
+			<Section ID = "signInPanel" Class = "disabled">
+				<Article Locale-Message = "signInPanel.details">
+					Please sign in with your Mastodon account before using MastodonRater.
+				</Article>
 			</Section>
 
-			<Section ID = "controlPanel">
+			<Section ID = "controlPanel" Class = "disabled">
 				<Article Locale-Message = "controlPanel.details">
 					Welcome to MastodonRater!<Br />
 					Feel free to choose any services, please.

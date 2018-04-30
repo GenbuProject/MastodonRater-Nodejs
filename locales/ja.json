@@ -1,6 +1,9 @@
 {
 	"header.languages": "言語",
+	"header.signIn": "ログイン",
 	"header.signOut": "ログアウト",
+
+	"signInPanel.details": "MastodonRaterをお使いになる前に、Mastodonのアカウントでログインしてください。",
 
 	"controlPanel.details": [
 		"MastodonRaterへようこそ！",
