@@ -34,7 +34,7 @@
 				<Div Class = "nav-wrapper">
 					<Span Class = "brand-logo center">MastodonRater</Span>
 
-					<A Href = "#" Class = "sidenav-trigger" Data-Target = "menu"><I Class = "material-icons">menu</I></A>
+					<A Href = "#" Class = "sidenav-trigger" Data-Target = "sidebar"><I Class = "material-icons">menu</I></A>
 					<UL Class = "right hide-on-med-and-down">
 						<Li>
 							<A Class = "dropdown-target" Data-Target = "header-languages">
@@ -59,20 +59,20 @@
 			</Nav>
 		</Header>
 
-		<UL ID = "menu" Class = "sidenav">
+		<UL ID = "sidebar" Class = "sidenav">
 			<Li>
-				<A Class = "dropdown-target" Data-Target = "header-languages">
+				<A Class = "dropdown-target" Data-Target = "sidebar-languages">
 					<Span Locale-Message = "header.languages">Languages</Span>
 					<I Class = "material-icons right">arrow_drop_down</I>
 				</A>
 			</Li>
-
-			<UL ID = "header-languages" Class = "dropdown-content">
+			
+			<UL ID = "sidebar-languages" Class = "dropdown-content">
 				<Li><A Href = "?lang=ja">日本語</A></Li>
 				<Li><A Href = "?lang=en">English</A></Li>
 			</UL>
 			
-			<Li ID = "header-signOut">
+			<Li ID = "sidebar-signOut">
 				<A Href = "#">
 					<Span Locale-Message = "header.signOut">Sign Out</Span>
 					<I Class = "material-icons right">person</I>
