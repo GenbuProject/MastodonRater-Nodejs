@@ -1,8 +1,6 @@
 class Locale {
 	static get currentLang () {
-		return cookieStore.get("MR-lang").then(res => {
-			if (res) return res.value;
-		});
+		return cookieStore.get("MR-lang");
 	}
 
 	static load (languageCode = "en") {
@@ -43,6 +41,7 @@ class Locale {
 
 
 
+let cookieStore = new CookieStore();
 let definedMessages = {};
 let LANG = "";
 
@@ -51,11 +50,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
 	if (querys.has("lang")) {
 		LANG = querys.get("lang");
-
-		cookieStore.set({
-			name: "MR-lang",
-			value: querys.get("lang")
-		});
+		cookieStore.set("MR-lang", querys.get("lang"));
 
 		Locale.load(LANG).then(messages => {
 			definedMessages = messages;
@@ -65,9 +60,9 @@ window.addEventListener("DOMContentLoaded", () => {
 		return;
 	}
 
-	Locale.currentLang.then(lang => LANG = lang).then(() => {
-		return Locale.load(LANG);
-	}).then(messages => {
+	LANG = Locale.currentLang;
+	
+	Locale.load(LANG).then(messages => {
 		definedMessages = messages;
 		Locale.apply(definedMessages);
 	});
