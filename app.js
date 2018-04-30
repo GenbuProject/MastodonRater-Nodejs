@@ -8,7 +8,7 @@ const R = require("./lib/Resources");
 require("dotenv").config();
 
 
-
+const SITEURL = "https://mastodon-rater.herokuapp.com/";
 const Mongo = new MongoHandler(process.env.DB_URI, process.env.DB_NAME);
 
 let app = express();
@@ -105,12 +105,94 @@ let app = express();
 	app.get("/api/token", (req, res) => {
 		const { instance, clientId, secretId, code, redirectTo } = req.query;
 
+		if (!instance || !clientId || !secretId || !code || !redirectTo) {
+			res.status(400).end(R.API_END_WITH_ERROR(new TypeError("5 queries, 'instance', 'clientId', 'secretId', 'code', and 'redirectTo' are required.")));
+			return;
+		}
+
 		Mastodon.getAccessToken(clientId, secretId, code, instance, redirectTo).then(accessToken => {
 			res.end(R.API_END({ accessToken }));
 		}).catch(error => {
-			res.status(400).end(R.API_END_WITH_ERROR(new TypeError("Any queries of all are invalid.")));
+			res.status(400).end(R.API_END_WITH_ERROR(new TypeError("Any queries are invalid.")));
 			return;
 		});
+	});
+
+	/**
+	 * Executes tootRater
+	 */
+	app.post("/api/tootRater", (req, res) => {
+		const { instance, token, privacy } = req.body;
+
+		if (!instance || !token) {
+			res.status(400).end(R.API_END_WITH_ERROR(new TypeError("2 payloads, 'instance' and 'token' are required.")));
+		}
+
+		let serverStatuses = 0,
+			userStatuses = 0,
+			rate = 0;
+
+		let Mstdn = new Mastodon({ api_url: `${instance}/api/v1/`, access_token: token });
+			Mstdn.get("instance").then(info => {
+				serverStatuses = info.data.stats.status_count;
+
+				return Mstdn.get("accounts/verify_credentials");
+			}).then(info => {
+				userStatuses = info.data.statuses_count;
+				rate = (userStatuses / serverStatuses * 100).toFixed(3);
+
+				return Mstdn.post("statuses", {
+					status: [
+						`@${info.data.username} さんの`,
+						`#トゥート率 は${rate}%です！`,
+						"",
+						"(Tooted from #MastodonRater)",
+						SITEURL
+					].join("\r\n"),
+
+					visibility: privacy || "public"
+				});
+			}).then(() => {
+				res.end(R.API_END({ rate }));
+			});
+	});
+
+	/**
+	 * Executes tpd
+	 */
+	app.post("/api/tpd", (req, res) => {
+		const { instance, token, privacy } = req.body;
+
+		if (!instance || !token) {
+			res.status(400).end(R.API_END_WITH_ERROR(new TypeError("2 payloads, 'instance' and 'token' are required.")));
+		}
+
+		let days = 0,
+			tpd = 0;
+
+		let Mstdn = new Mastodon({ api_url: `${instance}/api/v1/`, access_token: token });
+			Mstdn.get("accounts/verify_credentials").then(info => {
+				let nowTime = new Date().getTime(),
+					createdAt = new Date(info.data.created_at).getTime();
+
+				days = Math.floor((nowTime - createdAt) / (1000 * 60 * 60 * 24));
+				tpd = Math.floor(info.data.statuses_count / days);
+
+				return Mstdn.post("statuses", {
+					status: [
+						`@${info.data.username} さんの`,
+						`経過日数は${days}日`,
+						`#TPD は${tpd}です！`,
+						"",
+						"(Tooted from #MastodonRater)",
+						SITEURL
+					].join("\r\n"),
+
+					visibility: privacy || "public"
+				});
+			}).then(() => {
+				res.end(R.API_END({ days, tpd }));
+			});
 	});
 
 let listener = app.listen((process.env.PORT || 8001), () => {
