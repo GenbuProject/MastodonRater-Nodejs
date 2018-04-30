@@ -10,5 +10,5 @@ window.addEventListener("DOMContentLoaded", () => {
 });
 
 window.addEventListener("DOMContentLoaded", () => {
-	cookieStore.get("MR-privacy").then(item => privacySelector.namedItem(`privacy.${item.value}`).selected = true);
+	privacySelector.namedItem(`privacy.${cookieStore.get("MR-privacy")}`).selected = true;
 });
