@@ -89,6 +89,7 @@ class CookieStore {
 		}
 
 		document.cookie = cookie;
+		this.rawCookie = document.cookie;
 	}
 
 	/**
