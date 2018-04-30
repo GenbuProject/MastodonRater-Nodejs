@@ -19,7 +19,14 @@ let app = express();
 	/**
 	 * Gets whether MastodonRater exists in the instance
 	 */
-	app.get("/api/app", (req, res) => {
+	app.get("/api/exists", (req, res) => {
+		if (!Mongo.db) {
+			res.status(400).end(R.API_END_WITH_ERROR(R.ERROR.ENV.DB_URI));
+			return;
+		}
+
+
+
 		const { instance } = req.query;
 
 		if (!instance) {
@@ -27,18 +34,41 @@ let app = express();
 			return;
 		}
 
+		Mongo.existApp(instance).then(exists => res.end(R.API_END({ exists })));
+	});
+
+	/**
+	 * Gets information of MastodonRater in the instance
+	 */
+	app.get("/api/app", (req, res) => {
 		if (!Mongo.db) {
 			res.status(400).end(R.API_END_WITH_ERROR(R.ERROR.ENV.DB_URI));
 			return;
 		}
 
-		Mongo.existApp(instance).then(exists => res.end(R.API_END({ exists })));
+
+
+		const { instance } = req.query;
+
+		if (!instance) {
+			res.status(400).end(R.API_END_WITH_ERROR(new TypeError("A query, 'instance' is required.")));
+			return;
+		}
+
+		Mongo.getApp(instance).then(info => res.end(R.API_END(info)));
 	});
 
 	/**
 	 * Generates MastodonRater in the instance
 	 */
 	app.post("/api/app", (req, res) => {
+		if (!Mongo.db) {
+			res.status(400).end(R.API_END_WITH_ERROR(R.ERROR.ENV.DB_URI));
+			return;
+		}
+
+
+
 		const { instance, redirectTo } = req.body;
 		
 		if (!instance || !redirectTo) {
@@ -71,12 +101,12 @@ let app = express();
 	 * Gets user's token from received code
 	 */
 	app.get("/api/token", (req, res) => {
-		const { code, client_id, client_secret } = req.query;
+		const { code, clientId, secretId } = req.query;
 
-		Mastodon.getAccessToken(client_id, client_secret, code).then(accessToken => {
+		Mastodon.getAccessToken(clientId, secretId, code).then(accessToken => {
 			res.end(R.API_END({ accessToken }));
 		}).catch(error => {
-			res.status(400).end(R.API_END_WITH_ERROR(new TypeError("A query, 'code' is invalid.")));
+			res.status(400).end(R.API_END_WITH_ERROR(new TypeError("Any queries of all are invalid.")));
 			return;
 		});
 	});
