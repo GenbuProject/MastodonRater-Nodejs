@@ -105,10 +105,15 @@ let app = express();
 	app.get("/api/token", (req, res) => {
 		const { instance, clientId, secretId, code, redirectTo } = req.query;
 
+		if (!instance || !clientId || !secretId || !code || !redirectTo) {
+			res.status(400).end(R.API_END_WITH_ERROR(new TypeError("5 queries, 'instance', 'clientId', 'secretId', 'code', and 'redirectTo' are required.")));
+			return;
+		}
+
 		Mastodon.getAccessToken(clientId, secretId, code, instance, redirectTo).then(accessToken => {
 			res.end(R.API_END({ accessToken }));
 		}).catch(error => {
-			res.status(400).end(R.API_END_WITH_ERROR(new TypeError("Any queries of all are invalid.")));
+			res.status(400).end(R.API_END_WITH_ERROR(new TypeError("Any queries are invalid.")));
 			return;
 		});
 	});
@@ -118,6 +123,10 @@ let app = express();
 	 */
 	app.post("/api/tootRater", (req, res) => {
 		const { instance, token, privacy } = req.body;
+
+		if (!instance || !token) {
+			res.status(400).end(R.API_END_WITH_ERROR(new TypeError("2 payloads, 'instance' and 'token' are required.")));
+		}
 
 		let serverStatuses = 0,
 			userStatuses = 0,
@@ -141,7 +150,7 @@ let app = express();
 						SITEURL
 					].join("\r\n"),
 
-					visibility: privacy
+					visibility: privacy || "public"
 				});
 			}).then(() => {
 				res.end(R.API_END({ rate }));
