@@ -15,7 +15,7 @@ window.addEventListener("DOMContentLoaded", () => {
 		if (instance && instanceInputter.checkValidity()) {
 			fetch(`api/exists?instance=${instance}&redirectTo=${SITEURL}`).then(res => res.json()).then(res => {
 				if (res.exists) {
-					return fetch(`api/app?instance=${instance}`).then(res => res.json());
+					return fetch(`api/app?instance=${instance}&redirectTo=${SITEURL}`).then(res => res.json());
 				} else {
 					return new Promise((resolve, reject) => {
 						let connector = new XMLHttpRequest();
@@ -79,7 +79,7 @@ window.addEventListener("DOMContentLoaded", () => {
 	const instance = cookieStore.get("MR-instance");
 
 	if (querys.has("code") && instance) {
-		fetch(`api/app?instance=${instance}`).then(res => res.json()).then(info => {
+		fetch(`api/app?instance=${instance}&redirectTo=${SITEURL}`).then(res => res.json()).then(info => {
 			const { clientId, secretId, redirectTo } = info;
 
 			return fetch(`api/token?instance=${instance}&clientId=${clientId}&secretId=${secretId}&code=${querys.get("code")}&redirectTo=${redirectTo}`).then(res => res.json());
