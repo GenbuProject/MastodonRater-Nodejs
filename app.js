@@ -157,6 +157,44 @@ let app = express();
 			});
 	});
 
+	/**
+	 * Executes tpd
+	 */
+	app.post("/api/tpd", (req, res) => {
+		const { instance, token, privacy } = req.body;
+
+		if (!instance || !token) {
+			res.status(400).end(R.API_END_WITH_ERROR(new TypeError("2 payloads, 'instance' and 'token' are required.")));
+		}
+
+		let days = 0,
+			tpd = 0;
+
+		let Mstdn = new Mastodon({ api_url: `${instance}/api/v1/`, access_token: token });
+			Mstdn.get("accounts/verify_credentials").then(info => {
+				let nowTime = new Date().getTime(),
+					createdAt = new Date(info.data.created_at).getTime();
+
+				days = Math.floor((nowTime - createdAt) / (1000 * 60 * 60 * 24));
+				tpd = Math.floor(info.data.statuses_count / days);
+
+				return Mstdn.post("statuses", {
+					status: [
+						`@${info.data.username} さんの`,
+						`経過日数は${days}日`,
+						`#TPD は${tpd}です！`,
+						"",
+						"(Tooted from #MastodonRater)",
+						SITEURL
+					].join("\r\n"),
+
+					visibility: privacy || "public"
+				});
+			}).then(() => {
+				res.end(R.API_END({ days, tpd }));
+			});
+	});
+
 let listener = app.listen((process.env.PORT || 8001), () => {
 	console.log(`[MastodonRater] I'm running on port:${listener.address().port}✨`);
 });
