@@ -47,10 +47,10 @@
 							<Li><A Href = "?lang=ja">日本語</A></Li>
 							<Li><A Href = "?lang=en">English</A></Li>
 						</UL>
-						
-						<Li ID = "header-signInOut">
-							<A Href = "#">
-								<Span Locale-Message = "header.signIn">Sign In</Span>
+
+						<Li ID = "header-signOut" Class = "disabled">
+							<A>
+								<Span Locale-Message = "header.signOut">Sign Out</Span>
 								<I Class = "material-icons right">person</I>
 							</A>
 						</Li>
@@ -73,7 +73,7 @@
 			</UL>
 			
 			<Li ID = "sidebar-signInOut">
-				<A Href = "#">
+				<A>
 					<Span Locale-Message = "header.signIn">Sign In</Span>
 					<I Class = "material-icons right">person</I>
 				</A>
@@ -85,6 +85,13 @@
 				<Article Locale-Message = "signInPanel.details">
 					Please sign in with your Mastodon account before using MastodonRater.
 				</Article>
+
+				<Div Class = "input-field">
+					<Input ID = "signInPanel-instance" Class = "validate" Type = "URL" Value = "" />
+					<Label For = "signInPanel-instance" Locale-Message = "signInPanel.instance">Your instance(ex: <A Href = 'https://itabashi.0j0.jp' Target = '_blank'>https://itabashi.0j0.jp</A>)</Label>
+				</Div>
+
+				<Button ID = "signInPanel-signIn" Class = "btn waves-effect waves-light" Locale-Message = "signInPanel.signIn">Sign In</Button>
 			</Section>
 
 			<Section ID = "controlPanel" Class = "disabled">

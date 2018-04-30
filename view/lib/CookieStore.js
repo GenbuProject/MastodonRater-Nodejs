@@ -42,7 +42,7 @@ class CookieStore {
 	get (key = "") {
 		if (!key) throw new TypeError('An argument, "key" is not acceptable.');
 
-		return this.cookie[key] || null;
+		return this.cookie[key] ? decodeURIComponent(this.cookie[key]) : null;
 	}
 
 	/**

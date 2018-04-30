@@ -1,9 +1,10 @@
 {
 	"header.languages": "言語",
-	"header.signIn": "ログイン",
 	"header.signOut": "ログアウト",
 
 	"signInPanel.details": "MastodonRaterをお使いになる前に、Mastodonのアカウントでログインしてください。",
+	"signInPanel.instance": ["所属インスタンス(ex: <A Href = 'https://itabashi.0j0.jp' Target = '_blank'>https://itabashi.0j0.jp</A>)"],
+	"signInPanel.signIn": "ログイン",
 
 	"controlPanel.details": [
 		"MastodonRaterへようこそ！",
