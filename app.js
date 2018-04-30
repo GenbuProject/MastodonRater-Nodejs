@@ -27,14 +27,19 @@ let app = express();
 
 
 
-		const { instance } = req.query;
+		const { instance, redirectTo } = req.query;
 
 		if (!instance) {
 			res.status(400).end(R.API_END_WITH_ERROR(new TypeError("A query, 'instance' is required.")));
 			return;
 		}
 
-		Mongo.existApp(instance).then(exists => res.end(R.API_END({ exists })));
+		if (!redirectTo) {
+			res.status(400).end(R.API_END_WITH_ERROR(new TypeError("A query, 'redirectTo' is required.")));
+			return;
+		}
+
+		Mongo.existsApp(instance, redirectTo).then(exists => res.end(R.API_END({ exists })));
 	});
 
 	/**
@@ -76,7 +81,7 @@ let app = express();
 			return;
 		}
 
-		Mongo.existApp(instance).then(exists => {
+		Mongo.existsApp(instance, redirectTo).then(exists => {
 			if (exists) {
 				res.end(R.API_END());
 			} else {
@@ -92,6 +97,8 @@ let app = express();
 					return Mastodon.getAuthorizationUrl(clientId, secretId, instance, "read write", redirectTo);
 				}).then(authUrl => {
 					res.end(R.API_END(Object.assign(appInfo, { authUrl })));
+				}).catch(error => {
+					res.status(400).end(R.API_END_WITH_ERROR(new URIError(`${instance} is not an instance.`)));
 				});
 			}
 		});
