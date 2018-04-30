@@ -48,9 +48,10 @@ window.addEventListener("DOMContentLoaded", () => {
 
 								if (status == 400) {
 									reject(response.error);
-								} else {
-									resolve(response);
+									return;
 								}
+
+								resolve(response);
 							}
 						});
 					});
@@ -93,13 +94,12 @@ window.addEventListener("DOMContentLoaded", () => {
 			onLoad (event) {
 				const { status, response } = event.target;
 
-				if (status == 400) {
-					throw response.error;
-				} else {
-					tootRaterBtn.classList.remove("disabled");
-					tootRater.querySelector(".secondary-content.badge").classList.add("disabled");
-					M.toast({ html: definedMessages["common.finish"] });
-				}
+				if (status == 400) throw response.error;
+				
+				tootRaterBtn.classList.remove("disabled");
+				tootRater.querySelector(".secondary-content.badge").classList.add("disabled");
+				M.toast({ html: definedMessages["common.finish"] });
+				
 			}
 		});
 	});
