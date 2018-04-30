@@ -4,6 +4,10 @@
 
 
 
+*.disabled {
+	Display: None;
+}
+
 Main {
 	Font-Family: Roboto;
 	Line-Height: 1.75;
@@ -11,8 +15,4 @@ Main {
 
 Main > Section {
 	Padding: 1rem;
-}
-
-Main > Section.disabled {
-	Display: None;
 }
