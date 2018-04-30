@@ -8,7 +8,7 @@ const R = require("./lib/Resources");
 require("dotenv").config();
 
 
-
+const SITEURL = "https://mastodon-rater.herokuapp.com/";
 const Mongo = new MongoHandler(process.env.DB_URI, process.env.DB_NAME);
 
 let app = express();
@@ -111,6 +111,41 @@ let app = express();
 			res.status(400).end(R.API_END_WITH_ERROR(new TypeError("Any queries of all are invalid.")));
 			return;
 		});
+	});
+
+	/**
+	 * Executes tootRater
+	 */
+	app.post("/api/tootRater", (req, res) => {
+		const { instance, token, privacy } = req.body;
+
+		let serverStatuses = 0,
+			userStatuses = 0,
+			rate = 0;
+
+		let Mstdn = new Mastodon({ api_url: `${instance}/api/v1/`, access_token: token });
+			Mstdn.get("instance").then(info => {
+				serverStatuses = info.data.stats.status_count;
+
+				return Mstdn.get("accounts/verify_credentials");
+			}).then(info => {
+				userStatuses = info.data.statuses_count;
+				rate = (userStatuses / serverStatuses * 100).toFixed(3);
+
+				return Mstdn.post("statuses", {
+					status: [
+						`@${info.data.username} さんの`,
+						`#トゥート率 は${rate}%です！`,
+						"",
+						"(Tooted from #MastodonRater)",
+						SITEURL
+					].join("\r\n"),
+
+					visibility: privacy
+				});
+			}).then(() => {
+				res.end(R.API_END({ rate }));
+			});
 	});
 
 let listener = app.listen((process.env.PORT || 8001), () => {

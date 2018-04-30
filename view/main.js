@@ -8,7 +8,8 @@ const signInBtn = document.getElementById("signInPanel-signIn");
 const controlPanel = document.getElementById("controlPanel");
 const currentInstance = document.getElementById("controlPanel-currentInstance");
 const privacySelector = document.getElementById("controlPanel-privacy");
-const tootRaterBtn = document.querySelector("#feature-tootRater > A.secondary-content");
+const tootRater = document.querySelector("#feature-tootRater");
+const tootRaterBtn = tootRater.querySelector("A.secondary-content");
 
 window.addEventListener("DOMContentLoaded", () => {
 	[signOutBtnOnHeader, signOutBtnOnSidebar].forEach(signOutBtn => {
@@ -29,17 +30,20 @@ window.addEventListener("DOMContentLoaded", () => {
 					return fetch(`api/app?instance=${instance}&redirectTo=${SITEURL}`).then(res => res.json());
 				} else {
 					return new Promise((resolve, reject) => {
-						let connector = new XMLHttpRequest();
-							connector.responseType = "json";
-							connector.open("POST", "api/app", true);
+						DOM.xhr({
+							type: "POST",
+							url: "api/app",
+							resType: "json",
+							doesSync: true,
 
-							connector.setRequestHeader("Content-Type", "application/json");
-							connector.send(JSON.stringify({
+							headers: { "Content-Type": "application/json" },
+
+							data: JSON.stringify({
 								instance,
 								redirectTo: SITEURL
-							}));
+							}),
 
-							connector.addEventListener("load", event => {
+							onLoad (event) {
 								const { status, response } = event.target;
 
 								if (status == 400) {
@@ -47,7 +51,8 @@ window.addEventListener("DOMContentLoaded", () => {
 								} else {
 									resolve(response);
 								}
-							});
+							}
+						});
 					});
 				}
 			}).catch(error => {
@@ -66,6 +71,37 @@ window.addEventListener("DOMContentLoaded", () => {
 
 	tootRaterBtn.addEventListener("click", event => {
 		event.preventDefault();
+
+		tootRaterBtn.classList.add("disabled");
+		tootRater.querySelector(".secondary-content.badge").classList.remove("disabled");
+		M.toast({ html: definedMessages["common.running"] });
+
+		DOM.xhr({
+			type: "POST",
+			url: "api/tootRater",
+			resType: "json",
+			doesSync: true,
+
+			headers: { "Content-Type": "application/json" },
+
+			data: JSON.stringify({
+				instance: cookieStore.get("MR-instance"),
+				token: cookieStore.get("MR-token"),
+				privacy: cookieStore.get("MR-privacy")
+			}),
+
+			onLoad (event) {
+				const { status, response } = event.target;
+
+				if (status == 400) {
+					throw response.error;
+				} else {
+					tootRaterBtn.classList.remove("disabled");
+					tootRater.querySelector(".secondary-content.badge").classList.add("disabled");
+					M.toast({ html: definedMessages["common.finish"] });
+				}
+			}
+		});
 	});
 });
 
