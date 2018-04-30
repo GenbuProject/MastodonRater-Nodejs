@@ -42,6 +42,15 @@ window.addEventListener("DOMContentLoaded", () => {
 		}
 	});
 
+	[signOutBtnOnHeader, signOutBtnOnSidebar].forEach(signOutBtn => {
+		signOutBtn.addEventListener("click", () => {
+			cookieStore.set("MR-instance", "");
+			cookieStore.set("MR-token", "");
+
+			location.href = SITEURL;
+		});
+	});
+
 	privacySelector.addEventListener("change", event => {
 		let privacy = event.target.value;
 			cookieStore.set("MR-privacy", privacy);
@@ -65,11 +74,12 @@ window.addEventListener("DOMContentLoaded", () => {
 
 	if (querys.has("code") && instance) {
 		fetch(`api/app?instance=${instance}`).then(res => res.json()).then(info => {
-			const { clientId, secretId } = info;
+			const { clientId, secretId, redirectTo } = info;
 
-			return fetch(`api/token?instance=${instance}&clientId=${clientId}&secretId=${secretId}&code=${querys.get("code")}`).then(res => res.json());
-		}).then(token => {
-			cookieStore.set("MR-token", accessToken);
+			return fetch(`api/token?instance=${instance}&clientId=${clientId}&secretId=${secretId}&code=${querys.get("code")}&redirectTo=${redirectTo}`).then(res => res.json());
+		}).then(res => {
+			cookieStore.set("MR-token", res.accessToken);
+			location.href = SITEURL;
 		});
 	}
 });

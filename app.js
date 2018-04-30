@@ -101,9 +101,9 @@ let app = express();
 	 * Gets user's token from received code
 	 */
 	app.get("/api/token", (req, res) => {
-		const { instance, clientId, secretId, code } = req.query;
+		const { instance, clientId, secretId, code, redirectTo } = req.query;
 
-		Mastodon.getAccessToken(clientId, secretId, code, instance).then(accessToken => {
+		Mastodon.getAccessToken(clientId, secretId, code, instance, redirectTo).then(accessToken => {
 			res.end(R.API_END({ accessToken }));
 		}).catch(error => {
 			res.status(400).end(R.API_END_WITH_ERROR(new TypeError("Any queries of all are invalid.")));
