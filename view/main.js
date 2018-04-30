@@ -13,7 +13,7 @@ window.addEventListener("DOMContentLoaded", () => {
 		const instance = instanceInputter.value;
 
 		if (instance && instanceInputter.checkValidity()) {
-			fetch(`api/exists?instance=${instance}`).then(res => res.json()).then(res => {
+			fetch(`api/exists?instance=${instance}&redirectTo=${SITEURL}`).then(res => res.json()).then(res => {
 				if (res.exists) {
 					return fetch(`api/app?instance=${instance}`).then(res => res.json());
 				} else {
@@ -29,13 +29,19 @@ window.addEventListener("DOMContentLoaded", () => {
 							}));
 
 							connector.addEventListener("load", event => {
-								resolve(event.target.response);
+								const { status, response } = event.target;
+
+								if (status == 400) {
+									reject(response.error);
+								} else {
+									resolve(response);
+								}
 							});
 					});
 				}
+			}).catch(error => {
+				throw error;
 			}).then(info => {
-				console.log(info);
-
 				cookieStore.set("MR-instance", instance);
 				location.href = info.authUrl;
 			});
