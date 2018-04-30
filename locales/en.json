@@ -1,10 +1,11 @@
 {
+	"common.signIn": "Sign In",
+	"common.signOut": "Sign Out",
+
 	"header.languages": "Languages",
-	"header.signOut": "Sign Out",
 
 	"signInPanel.details": "Please sign in with your Mastodon account before using MastodonRater.",
 	"signInPanel.instance": ["Your instance(ex: <A Href = 'https://itabashi.0j0.jp' Target = '_blank'>https://itabashi.0j0.jp</A>)"],
-	"signInPanel.signIn": "Sign In",
 
 	"controlPanel.details": [
 		"Welcome to MastodonRater!",
