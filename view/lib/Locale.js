@@ -54,6 +54,12 @@ window.addEventListener("DOMContentLoaded", () => {
 
 		Locale.load(LANG).then(messages => {
 			definedMessages = messages;
+			return Locale.load();
+		}).then(messages => {
+			for (let localeId in messages) {
+				if (!definedMessages[localeId]) definedMessages[localeId] = messages[localeId];
+			}
+
 			Locale.apply(definedMessages);
 		});
 
@@ -64,6 +70,12 @@ window.addEventListener("DOMContentLoaded", () => {
 	
 	Locale.load(LANG).then(messages => {
 		definedMessages = messages;
+		return Locale.load();
+	}).then(messages => {
+		for (let localeId in messages) {
+			if (!definedMessages[localeId]) definedMessages[localeId] = messages[localeId];
+		}
+
 		Locale.apply(definedMessages);
 	});
 });
