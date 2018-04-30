@@ -10,6 +10,8 @@ const currentInstance = document.getElementById("controlPanel-currentInstance");
 const privacySelector = document.getElementById("controlPanel-privacy");
 const tootRater = document.querySelector("#feature-tootRater");
 const tootRaterBtn = tootRater.querySelector("A.secondary-content");
+const tpd = document.querySelector("#feature-tpd");
+const tpdBtn = tpd.querySelector("A.secondary-content");
 
 window.addEventListener("DOMContentLoaded", () => {
 	[signOutBtnOnHeader, signOutBtnOnSidebar].forEach(signOutBtn => {
@@ -99,7 +101,39 @@ window.addEventListener("DOMContentLoaded", () => {
 				tootRaterBtn.classList.remove("disabled");
 				tootRater.querySelector(".secondary-content.badge").classList.add("disabled");
 				M.toast({ html: definedMessages["common.finish"] });
+			}
+		});
+	});
+
+	tpdBtn.addEventListener("click", event => {
+		event.preventDefault();
+
+		tpdBtn.classList.add("disabled");
+		tpd.querySelector(".secondary-content.badge").classList.remove("disabled");
+		M.toast({ html: definedMessages["common.running"] });
+
+		DOM.xhr({
+			type: "POST",
+			url: "api/tpd",
+			resType: "json",
+			doesSync: true,
+
+			headers: { "Content-Type": "application/json" },
+
+			data: JSON.stringify({
+				instance: cookieStore.get("MR-instance"),
+				token: cookieStore.get("MR-token"),
+				privacy: cookieStore.get("MR-privacy")
+			}),
+
+			onLoad (event) {
+				const { status, response } = event.target;
+
+				if (status == 400) throw response.error;
 				
+				tpdBtn.classList.remove("disabled");
+				tpd.querySelector(".secondary-content.badge").classList.add("disabled");
+				M.toast({ html: definedMessages["common.finish"] });
 			}
 		});
 	});
