@@ -1,6 +1,7 @@
 {
 	"common.signIn": "ログイン",
 	"common.signOut": "ログアウト",
+	"common.running": "処理中...",
 
 	"header.languages": "言語",
 
@@ -12,6 +13,7 @@
 		"以下よりご利用になるサービスをお選びください。"
 	],
 
+	"controlPanel.currentInstance": "現在のインスタンス",
 	"controlPanel.privacy": "公開範囲",
 	"controlPanel.privacy.public": "公開",
 	"controlPanel.privacy.unlisted": "未収載",

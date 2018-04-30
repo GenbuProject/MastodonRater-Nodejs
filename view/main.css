@@ -16,3 +16,7 @@ Main {
 Main > Section {
 	Padding: 1rem;
 }
+
+Main > Section#controlPanel #controlPanel-currentInstance {
+	Text-Decoration: Underline;
+}

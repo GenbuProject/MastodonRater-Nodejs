@@ -6,9 +6,20 @@ const signInPanel = document.getElementById("signInPanel");
 const instanceInputter = document.getElementById("signInPanel-instance");
 const signInBtn = document.getElementById("signInPanel-signIn");
 const controlPanel = document.getElementById("controlPanel");
+const currentInstance = document.getElementById("controlPanel-currentInstance");
 const privacySelector = document.getElementById("controlPanel-privacy");
+const tootRaterBtn = document.querySelector("#feature-tootRater > A.secondary-content");
 
 window.addEventListener("DOMContentLoaded", () => {
+	[signOutBtnOnHeader, signOutBtnOnSidebar].forEach(signOutBtn => {
+		signOutBtn.addEventListener("click", () => {
+			cookieStore.set("MR-instance", "");
+			cookieStore.set("MR-token", "");
+
+			location.href = SITEURL;
+		});
+	});
+
 	signInBtn.addEventListener("click", () => {
 		const instance = instanceInputter.value;
 
@@ -48,18 +59,13 @@ window.addEventListener("DOMContentLoaded", () => {
 		}
 	});
 
-	[signOutBtnOnHeader, signOutBtnOnSidebar].forEach(signOutBtn => {
-		signOutBtn.addEventListener("click", () => {
-			cookieStore.set("MR-instance", "");
-			cookieStore.set("MR-token", "");
-
-			location.href = SITEURL;
-		});
-	});
-
 	privacySelector.addEventListener("change", event => {
 		let privacy = event.target.value;
 			cookieStore.set("MR-privacy", privacy);
+	});
+
+	tootRaterBtn.addEventListener("click", event => {
+		event.preventDefault();
 	});
 });
 
@@ -67,6 +73,9 @@ window.addEventListener("DOMContentLoaded", () => {
 	if (cookieStore.get("MR-instance") && cookieStore.get("MR-token")) {
 		controlPanel.classList.remove("disabled");
 		signOutBtnOnHeader.classList.remove("disabled");
+		signOutBtnOnSidebar.classList.remove("disabled");
+
+		currentInstance.textContent = currentInstance.href = cookieStore.get("MR-instance");
 	} else {
 		signInPanel.classList.remove("disabled");
 	}

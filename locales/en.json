@@ -1,6 +1,7 @@
 {
 	"common.signIn": "Sign In",
 	"common.signOut": "Sign Out",
+	"common.running": "Now Running...",
 
 	"header.languages": "Languages",
 
@@ -12,6 +13,7 @@
 		"Feel free to choose any services, please."
 	],
 
+	"controlPanel.currentInstance": "Current instance",
 	"controlPanel.privacy": "Privacy",
 	"controlPanel.privacy.public": "Public",
 	"controlPanel.privacy.unlisted": "Unlisted",
