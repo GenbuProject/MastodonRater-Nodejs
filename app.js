@@ -29,13 +29,8 @@ let app = express();
 
 		const { instance, redirectTo } = req.query;
 
-		if (!instance) {
-			res.status(400).end(R.API_END_WITH_ERROR(new TypeError("A query, 'instance' is required.")));
-			return;
-		}
-
-		if (!redirectTo) {
-			res.status(400).end(R.API_END_WITH_ERROR(new TypeError("A query, 'redirectTo' is required.")));
+		if (!instance || !redirectTo) {
+			res.status(400).end(R.API_END_WITH_ERROR(new TypeError("2 queries, 'instance' and 'redirectTo' are required.")));
 			return;
 		}
 
@@ -53,14 +48,14 @@ let app = express();
 
 
 
-		const { instance } = req.query;
+		const { instance, redirectTo } = req.query;
 
-		if (!instance) {
-			res.status(400).end(R.API_END_WITH_ERROR(new TypeError("A query, 'instance' is required.")));
+		if (!instance || !redirectTo) {
+			res.status(400).end(R.API_END_WITH_ERROR(new TypeError("2 queries, 'instance' and 'redirectTo' are required.")));
 			return;
 		}
 
-		Mongo.getApp(instance).then(info => res.end(R.API_END(info)));
+		Mongo.getApp(instance, redirectTo).then(info => res.end(R.API_END(info)));
 	});
 
 	/**
