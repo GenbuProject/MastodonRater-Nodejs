@@ -24,6 +24,7 @@
 
 		<Script Src = "lib/CookieStore.js"></Script>
 		<Script Src = "lib/Locale.js"></Script>
+		<Script Src = "lib/XHR.js"></Script>
 		<Script Src = "main.js" Defer></Script>
 		<Link Rel = "StyleSheet" Href = "main.css" />
 	</Head>
@@ -72,7 +73,7 @@
 				<Li><A Href = "?lang=en">English</A></Li>
 			</UL>
 			
-			<Li ID = "sidebar-signOut">
+			<Li ID = "sidebar-signOut" Class = "disabled">
 				<A>
 					<Span Locale-Message = "common.signOut">Sign Out</Span>
 					<I Class = "material-icons right">person</I>
@@ -100,7 +101,11 @@
 					Feel free to choose any services, please.
 				</Article>
 
-				<UL Class = "collection">
+				<Article>
+					(<Locale Message = "controlPanel.currentInstance">Current instance</Locale>: <A ID = "controlPanel-currentInstance" Target = "_blank"></A>)
+				</Article>
+
+				<UL ID = "feature" Class = "collection">
 					<Li Class = "collection-header">
 						<Div Class = "input-field">
 							<Select ID = "controlPanel-privacy">
@@ -115,7 +120,7 @@
 						</Div>
 					</Li>
 
-					<Li Class = "collection-item avatar">
+					<Li ID = "feature-tootRater" Class = "collection-item avatar">
 						<I Class = "material-icons circle">chat</I>
 
 						<Span Class = "title">Toot Rater</Span>
@@ -124,9 +129,10 @@
 						</P>
 
 						<A Class = "secondary-content" Href = "#"><I Class = "material-icons">launch</I></A>
+						<Span Class = "secondary-content badge new disabled" Data-Badge-Caption = "" Locale-Message = "common.running">Now Running...</Span>
 					</Li>
 
-					<Li Class = "collection-item avatar">
+					<Li ID = "feature-tpd" Class = "collection-item avatar">
 						<I Class = "material-icons circle">subject</I>
 
 						<Span Class = "title">TPD(Toots Per Day)</Span>
@@ -135,9 +141,10 @@
 						</P>
 
 						<A Class = "secondary-content" Href = "#"><I Class = "material-icons">launch</I></A>
+						<Span Class = "secondary-content badge new disabled" Data-Badge-Caption = "" Locale-Message = "common.running">Now Running...</Span>
 					</Li>
 
-					<Li Class = "collection-item avatar">
+					<Li ID = "feature-relevanceAnalyzer" Class = "collection-item avatar">
 						<I Class = "material-icons circle">people</I>
 
 						<Span Class = "title">Relevance Analyzer</Span>
@@ -146,6 +153,7 @@
 						</P>
 
 						<A Class = "secondary-content" Href = "#"><I Class = "material-icons">launch</I></A>
+						<Span Class = "secondary-content badge new disabled" Data-Badge-Caption = "" Locale-Message = "common.running">Now Running...</Span>
 					</Li>
 				</UL>
 			</Section>
