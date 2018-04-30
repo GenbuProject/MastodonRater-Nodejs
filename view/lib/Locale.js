@@ -46,6 +46,9 @@ let cookieStore = new CookieStore();
 let definedMessages = {};
 let LANG = "";
 
+if (!cookieStore.has("MR-lang")) cookieStore.set("MR-lang", "en");
+if (!cookieStore.has("MR-privacy")) cookieStore.set("MR-privacy", "public");
+
 window.addEventListener("DOMContentLoaded", () => {
 	let querys = new URLSearchParams(location.search);
 
