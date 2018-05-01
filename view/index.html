@@ -152,8 +152,22 @@
 							Toot relevance with your followers
 						</P>
 
-						<A Class = "secondary-content" Href = "#"><I Class = "material-icons">launch</I></A>
+						<A Class = "secondary-content modal-trigger" Href = "#" Data-Target = "feature-relevanceAnalyzer-rangeConfirmer"><I Class = "material-icons">launch</I></A>
 						<Span Class = "secondary-content badge new disabled" Data-Badge-Caption = "" Locale-Message = "common.running">Now Running...</Span>
+
+						<Div ID = "feature-relevanceAnalyzer-rangeConfirmer" Class = "modal">
+							<Div Class = "modal-content">
+								<P Locale-Message = "controlPanel.relevanceAnalyzer.rangeConfirmer.details">
+									Please select date range.<Br />
+									It'll get information based on provided one.<Br />
+									<Span Class = 'red-text'>(* Longer the range, longer the time you'll spend!)</Span>
+								</P>
+							</Div>
+
+							<Div Class = "modal-footer">
+								<A Class = "btn-flat modal-action modal-close waves-effect waves-light">OK</A>
+							</Div>
+						</Div>
 					</Li>
 				</UL>
 			</Section>
