@@ -25,6 +25,11 @@
 	"controlPanel.tpd": "1日当たりの平均トゥート数",
 	"controlPanel.relevanceAnalyzer": "ユーザーとの親密度",
 
+	"controlPanel.relevanceAnalyzer.rangeConfirmer.details": [
+		"取得範囲を選択して下さい。",
+		"<Span Class = 'red-text'>※取得範囲が長いほど処理に時間が掛かります！！！</Span>"
+	],
+
 	"contactPanel.details": [
 		"不具合や分からない事などございましたら、お気軽に<A Href = 'https://itabashi.0j0.jp/@ProgrammerGenboo' Target = '_blank'>こちら</A>までご連絡下さい。",
 		"Mastodonのアカウントをお持ちでなければ<A Href = 'mailto:programmergenboo@gmail.com'>こちら</A>もどうぞです✌︎('ω'✌︎ )"
