@@ -36,6 +36,7 @@ class Locale {
 
 		document.querySelectorAll("Select").forEach(select => M.FormSelect.init(select));
 		document.querySelectorAll(".dropdown-target").forEach(dropdownTarget => M.Dropdown.init(dropdownTarget));
+		document.querySelectorAll(".modal").forEach(modal => M.Modal.init(modal));
 		document.querySelectorAll(".sidenav").forEach(sidenav => M.Sidenav.init(sidenav));
 	}
 }
