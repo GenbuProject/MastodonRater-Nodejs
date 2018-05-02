@@ -2,7 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const Mastodon = require("mastodon-api");
 const MongoHandler = require("./lib/MongoHandler");
-const Formatter = require("./lib/Formatter");
+const APIHandler = require("./lib/APIHandler");
 const R = require("./lib/Resources");
 
 //This code is for only developing
@@ -120,6 +120,25 @@ let app = express();
 	});
 
 	/**
+	 * Toots with provided contents
+	 */
+	app.post("/api/toot", (req, res) => {
+		const { instance, token, privacy, status } = req.body;
+
+		if (!instance || !token) {
+			res.status(400).end(R.API_END_WITH_ERROR(new TypeError("2 payloads, 'instance' and 'token' are required.")));
+		}
+
+		let Mstdn = new Mastodon({ api_url: `${instance}/api/v1/`, access_token: token });
+			Mstdn.post("statuses", {
+				status,
+				visibility: privacy || "public"
+			}).then(info => {
+				res.end(R.API_END({ status: info.data }));
+			});
+	});
+
+	/**
 	 * Executes Toot Rater
 	 */
 	app.post("/api/feature/TootRater", (req, res) => {
@@ -200,27 +219,99 @@ let app = express();
 	 * Executes Relevance Analyzer
 	 */
 	app.post("/api/feature/RelevanceAnalyzer", (req, res) => {
-		const { instance, token, privacy } = req.body;
+		const { instance, token, privacy, isImmediately } = req.body;
+		let { dateRange } = req.body;
 
 		if (!instance || !token) {
 			res.status(400).end(R.API_END_WITH_ERROR(new TypeError("2 payloads, 'instance' and 'token' are required.")));
 		}
 
+		if (!dateRange) {
+			let today = new Date();
+				dateRange = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+		} else if (Number.isInteger(dateRange)) {
+			dateRange = new Date(dateRange);
+		}
+
+		let me = {};
+		let friends = [];
+		let ranking = [];
+
 		let Mstdn = new Mastodon({ api_url: `${instance}/api/v1/`, access_token: token });
+		let mstdnHandler = new APIHandler(Mstdn);
 			Mstdn.get("accounts/verify_credentials").then(info => {
-				const user = info.data;
+				me = info.data;
 
-				if (user.following_count > user.followers_count) {
-					return Mstdn.get(`accounts/${user.id}/followers`, { limit: 80 });
+				if (me.following_count > me.followers_count) {
+					return mstdnHandler.getFollowers(me.id);
 				} else {
-					return Mstdn.get(`accounts/${user.id}/following`, { limit: 80 });
+					return mstdnHandler.getFollowing(me.id);
 				}
-			}).then(info => {
-				console.log(info);
-			});
+			}).then(users => {
+				return mstdnHandler.getFriends(users);
+			}).then(_friends => {
+				friends = _friends;
+				return mstdnHandler.getStatuses(me.id, new Date(), dateRange);
+			}).then(statuses => {
+				for (let status of statuses) {
+					if (status.reblog && friends[status.reblog.account.id]) friends[status.reblog.account.id].reblogScore += R.API_FEATURE_RA_REBLOG;
 
-		res.end(R.API_END());
+					if (status.mentions) {
+						for (let mention of status.mentions) {
+							if (friends[mention.id]) friends[mention.id].mentionScore += R.API_FEATURE_RA_MENTION;
+						}
+					}
+				}
+			}).then(() => {
+				ranking = friends.filter(friend => (friend.sumScore = friend.reblogScore + friend.mentionScore) !== 0);
+				ranking = ranking.sort((a, b) => {
+					if (a.sumScore < b.sumScore) return 1;
+					if (a.sumScore > b.sumScore) return -1;
+					return 0;
+				});
+
+				let tootContent = [
+					"#RelevanceAnalyzer",
+					`${dateRange.toLocaleString()}までの #統計さん`,
+					"",
+					`@${me.acct} さんと`,
+					`仲良しのユーザーは`,
+					"",
+					(amount => {
+						const rankIn = [];
+
+						for (let i = 0; i < amount; i++) {
+							if (!ranking[i]) return rankIn.join("\r\n");
+
+							rankIn.push([
+								`《${i + 1}位》`,
+								`${ranking[i].acct}(Score ${ranking[i].sumScore})`,
+								""
+							].join("\r\n"));
+						}
+
+						return rankIn.join("\r\n");
+					})(R.API_FEATURE_RA_AMOUNT),
+					"の方々です！！",
+					"",
+					"(Tooted from #MastodonRater)",
+					SITEURL
+				].join("\r\n");
+
+				if (isImmediately) {
+					return Mstdn.post("statuses", {
+						status: tootContent,
+						visibility: privacy || "public"
+					});
+				}
+					
+				res.end(R.API_END({ ranking: tootContent, isImmediately: false }));
+			}).then(() => {
+				res.end(R.API_END({ ranking, isImmediately: true }));
+			});
 	});
+
+
 
 let listener = app.listen((process.env.PORT || 8001), () => {
 	console.log(`[MastodonRater] I'm running on port:${listener.address().port}✨`);

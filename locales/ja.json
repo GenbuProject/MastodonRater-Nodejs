@@ -8,6 +8,7 @@
 	"common.signOut": "ログアウト",
 	"common.running": "処理中...",
 	"common.finish": "処理が完了しました",
+	"common.abort": "この処理は中断されました",
 
 	"header.languages": "言語",
 

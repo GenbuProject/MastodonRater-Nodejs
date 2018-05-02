@@ -12,8 +12,15 @@ const tootRater = document.getElementById("feature-tootRater");
 const tootRaterBtn = tootRater.querySelector("A.secondary-content");
 const tpd = document.getElementById("feature-tpd");
 const tpdBtn = tpd.querySelector("A.secondary-content");
-const relevanceAnalyzer = document.getElementById("feature-relevanceAnalyzer");
-const relevanceAnalyzerBtn = relevanceAnalyzer.querySelector("A.secondary-content");
+const RA = document.getElementById("feature-relevanceAnalyzer");
+const RARangeConfirmer = RA.querySelector("#feature-relevanceAnalyzer-rangeConfirmer");
+const RARangeConfirmerRange = RARangeConfirmer.querySelector("#feature-relevanceAnalyzer-rangeConfirmer-range");
+const RARangeConfirmerSkipConfirm = RARangeConfirmer.querySelector("#feature-relevanceAnalyzer-rangeConfirmer-skipConfirm");
+const RARangeConfirmerLaunch = RARangeConfirmer.querySelector("#feature-relevanceAnalyzer-rangeConfirmer-launch");
+const RARankingConfirmer = RA.querySelector("#feature-relevanceAnalyzer-rankingConfirmer");
+const RARankingConfirmerContent = RARankingConfirmer.querySelector("#feature-relevanceAnalyzer-rankingConfirmer-ranking");
+const RARankingConfirmerLaunch = RARankingConfirmer.querySelector("#feature-relevanceAnalyzer-rankingConfirmer-launch");
+const RARankingConfirmerCancel = RARankingConfirmer.querySelector(".modal-footer > A.modal-close:Not(.modal-action)");
 
 window.addEventListener("DOMContentLoaded", () => {
 	[signOutBtnOnHeader, signOutBtnOnSidebar].forEach(signOutBtn => {
@@ -138,6 +145,84 @@ window.addEventListener("DOMContentLoaded", () => {
 				M.toast({ html: definedMessages["common.finish"] });
 			}
 		});
+	});
+
+	RARangeConfirmerLaunch.addEventListener("click", event => {
+		event.preventDefault();
+
+		RA.querySelector("A.secondary-content").classList.add("disabled");
+		RA.querySelector(".secondary-content.badge").classList.remove("disabled");
+		M.toast({ html: definedMessages["common.running"] });
+
+		let today = new Date();
+
+		DOM.xhr({
+			type: "POST",
+			url: "api/feature/RelevanceAnalyzer",
+			resType: "json",
+			doesSync: true,
+
+			headers: { "Content-Type": "application/json" },
+
+			data: JSON.stringify({
+				instance: cookieStore.get("MR-instance"),
+				token: cookieStore.get("MR-token"),
+				privacy: cookieStore.get("MR-privacy"),
+				dateRange: new Date(today.getFullYear(), today.getMonth(), today.getDate() - RARangeConfirmerRange.value).getTime(),
+				isImmediately: RARangeConfirmerSkipConfirm.checked
+			}),
+
+			onLoad (event) {
+				const { status, response } = event.target;
+
+				if (status == 400) throw response.error;
+
+				if (!response.isImmediately) {
+					RARankingConfirmerContent.textContent = response.ranking;
+					RARankingConfirmer.M_Modal.open();
+
+					return;
+				}
+				
+				RA.querySelector("A.secondary-content").classList.remove("disabled");
+				RA.querySelector(".secondary-content.badge").classList.add("disabled");
+				M.toast({ html: definedMessages["common.finish"] });
+			}
+		});
+	});
+
+	RARankingConfirmerLaunch.addEventListener("click", () => {
+		DOM.xhr({
+			type: "POST",
+			url: "api/toot",
+			resType: "json",
+			doesSync: true,
+
+			headers: { "Content-Type": "application/json" },
+
+			data: JSON.stringify({
+				instance: cookieStore.get("MR-instance"),
+				token: cookieStore.get("MR-token"),
+				privacy: cookieStore.get("MR-privacy"),
+				status: RARankingConfirmerContent.textContent
+			}),
+
+			onLoad (event) {
+				const { status, response } = event.target;
+
+				if (status == 400) throw response.error;
+
+				RA.querySelector("A.secondary-content").classList.remove("disabled");
+				RA.querySelector(".secondary-content.badge").classList.add("disabled");
+				M.toast({ html: definedMessages["common.finish"] });
+			}
+		});
+	});
+
+	RARankingConfirmerCancel.addEventListener("click", () => {
+		RA.querySelector("A.secondary-content").classList.remove("disabled");
+		RA.querySelector(".secondary-content.badge").classList.add("disabled");
+		M.toast({ html: definedMessages["common.abort"] });
 	});
 });
 
