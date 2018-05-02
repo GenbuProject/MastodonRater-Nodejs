@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const Mastodon = require("mastodon-api");
 const MongoHandler = require("./lib/MongoHandler");
+const Formatter = require("./lib/Formatter");
 const R = require("./lib/Resources");
 
 //This code is for only developing
@@ -119,9 +120,9 @@ let app = express();
 	});
 
 	/**
-	 * Executes tootRater
+	 * Executes Toot Rater
 	 */
-	app.post("/api/tootRater", (req, res) => {
+	app.post("/api/feature/TootRater", (req, res) => {
 		const { instance, token, privacy } = req.body;
 
 		if (!instance || !token) {
@@ -143,7 +144,7 @@ let app = express();
 
 				return Mstdn.post("statuses", {
 					status: [
-						`@${info.data.username} さんの`,
+						`@${info.data.acct} さんの`,
 						`#トゥート率 は${rate}%です！`,
 						"",
 						"(Tooted from #MastodonRater)",
@@ -158,9 +159,9 @@ let app = express();
 	});
 
 	/**
-	 * Executes tpd
+	 * Executes TPD
 	 */
-	app.post("/api/tpd", (req, res) => {
+	app.post("/api/feature/TPD", (req, res) => {
 		const { instance, token, privacy } = req.body;
 
 		if (!instance || !token) {
@@ -180,7 +181,7 @@ let app = express();
 
 				return Mstdn.post("statuses", {
 					status: [
-						`@${info.data.username} さんの`,
+						`@${info.data.acct} さんの`,
 						`経過日数は${days}日`,
 						`#TPD は${tpd}です！`,
 						"",
@@ -193,6 +194,32 @@ let app = express();
 			}).then(() => {
 				res.end(R.API_END({ days, tpd }));
 			});
+	});
+
+	/**
+	 * Executes Relevance Analyzer
+	 */
+	app.post("/api/feature/RelevanceAnalyzer", (req, res) => {
+		const { instance, token, privacy } = req.body;
+
+		if (!instance || !token) {
+			res.status(400).end(R.API_END_WITH_ERROR(new TypeError("2 payloads, 'instance' and 'token' are required.")));
+		}
+
+		let Mstdn = new Mastodon({ api_url: `${instance}/api/v1/`, access_token: token });
+			Mstdn.get("accounts/verify_credentials").then(info => {
+				const user = info.data;
+
+				if (user.following_count > user.followers_count) {
+					return Mstdn.get(`accounts/${user.id}/followers`, { limit: 80 });
+				} else {
+					return Mstdn.get(`accounts/${user.id}/following`, { limit: 80 });
+				}
+			}).then(info => {
+				console.log(info);
+			});
+
+		res.end(R.API_END());
 	});
 
 let listener = app.listen((process.env.PORT || 8001), () => {

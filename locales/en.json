@@ -1,4 +1,9 @@
 {
+	"common.yes": "Yes",
+	"common.no": "No",
+	"common.ok": "OK",
+	"common.cancel": "Cancel",
+	"common.launch": "Launch",
 	"common.signIn": "Sign In",
 	"common.signOut": "Sign Out",
 	"common.running": "Now Running...",
@@ -25,11 +30,24 @@
 	"controlPanel.tpd": "Toot an average of number of your statuses",
 	"controlPanel.relevanceAnalyzer": "Toot relevance with your followers",
 
-	"controlPanel.relevanceAnalyzer.rangeConfirmer.details": [
-		"Please select date range.",
-		"It'll get information based on provided one.",
-		"<Span Class = 'red-text'>(* Longer the range, longer the time you'll spend!)</Span>"
+	"relevanceAnalyzer.rangeConfirmer.details": [
+		"Please select date range, and it will be used to get information.",
+		"<Span Class = 'red-text'>(*Longer the range, longer the time you'll spend!)</Span>"
 	],
+	
+	"relevanceAnalyzer.rangeConfirmer.range": "Date range",
+	"relevanceAnalyzer.rangeConfirmer.range0": "Today only",
+	"relevanceAnalyzer.rangeConfirmer.range1": "Between today and yesterday",
+	"relevanceAnalyzer.rangeConfirmer.range2": "Between today to 2 days before",
+	"relevanceAnalyzer.rangeConfirmer.range3": "Between today to 3 days before",
+	"relevanceAnalyzer.rangeConfirmer.range4": "Between today to 4 days before",
+	"relevanceAnalyzer.rangeConfirmer.range5": "Between today to 5 days before",
+	"relevanceAnalyzer.rangeConfirmer.range6": "Between today to 6 days before",
+	"relevanceAnalyzer.rangeConfirmer.range7": "Between today to last week",
+	"relevanceAnalyzer.rangeConfirmer.skipConfirm": "Will you skip over confirming a ranking before tooting?",
+
+	"relevanceAnalyzer.rankingConfirmer.title": "Confirm ranking | Relevance Analyzer",
+	"relevanceAnalyzer.rankingConfirmer.details": "Please accept to toot this ranking.",
 
 	"contactPanel.details": [
 		"If you have any questions or anything, feel free to contact <A Href = 'https://itabashi.0j0.jp/@ProgrammerGenboo' Target = '_blank'>me</A>.",
