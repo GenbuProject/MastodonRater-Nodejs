@@ -42,7 +42,9 @@ heroku git:remote -a APP_NAME(任意のアプリケーション名)
 git push heroku master
 ```
 
-デプロイが完了した後、`https://(APP_NAME).herokuapp.com`にてアプリケーションが動作していることが確認できます。
+デプロイが完了した後に、環境変数を設定してください。
+`DB_URI`にMongoDBへのアクセスURL、`DB_NAME`にテーブルの名前を設定して、
+`https://(APP_NAME).herokuapp.com`にてアプリケーションが動作していることが確認してください。
 なお、CLI から開く場合は下記のコマンドを実行してください。
 
 ```
