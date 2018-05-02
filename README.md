@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/GenbuProject/MastodonRater-Nodejs.svg)](https://travis-ci.org/GenbuProject/MastodonRater-Nodejs)
 [![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
-An analyzer of mastodon, for the users, by the users
+An analyzer tool of mastodon, for the users, by the user
 
 ## Languages
 * [日本語 | Japanese](/README[Japanese].md)
