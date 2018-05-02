@@ -43,8 +43,9 @@ git push heroku master
 ```
 
 デプロイが完了した後に、環境変数を設定してください。
-`DB_URI`にMongoDBへのアクセスURL、`DB_NAME`にテーブルの名前を設定して、
-`https://(APP_NAME).herokuapp.com`にてアプリケーションが動作していることが確認してください。
+
+`DB_URI`にMongoDBへのアクセスURLを、`DB_NAME`にテーブルの名前を設定して、`https://(APP_NAME).herokuapp.com`にてアプリケーションが動作していることが確認してください。
+
 なお、CLI から開く場合は下記のコマンドを実行してください。
 
 ```

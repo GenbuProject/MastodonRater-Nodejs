@@ -9,7 +9,7 @@
 * [English | 英語](/README.md)
 
 ## 概要 | Overview
-当サービスは、MastodonAPIを利用して様々な指標を算出するツールです。
+当サービスは、MastodonAPIを利用して様々な指標を算出するツールです。<Br />
 Herokuへのデプロイ方法は[こちら](/DeployToHeroku.md)を参照してください。
 
 ## 機能一覧 | Features
@@ -28,8 +28,6 @@ Herokuへのデプロイ方法は[こちら](/DeployToHeroku.md)を参照して�
 * [@ProgrammerGenboo(神崎丼)](https://knzk.me/@ProgrammerGenboo)
 * [@ProgrammerGenboo(Yづドン)](https://mstdn.y-zu.org/@ProgrammerGenboo)
 * [どっかのGenboo。(Google+)](https://plus.google.com/106666684430101995501)
-* [ProgrammerGenboo(Eメール)](mailto:programmergenboo@gmail.com)
-* [Genbu Project](mailto:genbuproject@gmail.com)
 
 ## ライセンス | License
 [MIT LICENSE](/LICENSE)

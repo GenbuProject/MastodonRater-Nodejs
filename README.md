@@ -9,7 +9,7 @@ An analyzer of mastodon, for the users, by the users
 * [日本語 | Japanese](/README[Japanese].md)
 
 ## Overview
-MastodonRater can analyze you with Mastodon.
+MastodonRater can analyze you with Mastodon.<Br />
 Please see [doc](/DeployToHeroku.md) if you deploy to Heroku.
 
 ## Features
@@ -28,8 +28,6 @@ Feel free to contact me if you have any questions or something!
 * [@ProgrammerGenboo(Knzk.me)](https://knzk.me/@ProgrammerGenboo)
 * [@ProgrammerGenboo(Y-zu)](https://mstdn.y-zu.org/@ProgrammerGenboo)
 * [ProgrammerGenboo(Google+)](https://plus.google.com/106666684430101995501)
-* [ProgrammerGenboo(E-mail)](mailto:programmergenboo@gmail.com)
-* [Genbu Project](mailto:genbuproject@gmail.com)
 
 ## License
 [MIT LICENSE](/LICENSE)
