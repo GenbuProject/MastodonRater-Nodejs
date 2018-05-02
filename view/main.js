@@ -8,10 +8,12 @@ const signInBtn = document.getElementById("signInPanel-signIn");
 const controlPanel = document.getElementById("controlPanel");
 const currentInstance = document.getElementById("controlPanel-currentInstance");
 const privacySelector = document.getElementById("controlPanel-privacy");
-const tootRater = document.querySelector("#feature-tootRater");
+const tootRater = document.getElementById("feature-tootRater");
 const tootRaterBtn = tootRater.querySelector("A.secondary-content");
-const tpd = document.querySelector("#feature-tpd");
+const tpd = document.getElementById("feature-tpd");
 const tpdBtn = tpd.querySelector("A.secondary-content");
+const relevanceAnalyzer = document.getElementById("feature-relevanceAnalyzer");
+const relevanceAnalyzerBtn = relevanceAnalyzer.querySelector("A.secondary-content");
 
 window.addEventListener("DOMContentLoaded", () => {
 	[signOutBtnOnHeader, signOutBtnOnSidebar].forEach(signOutBtn => {
@@ -81,7 +83,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
 		DOM.xhr({
 			type: "POST",
-			url: "api/tootRater",
+			url: "api/feature/TootRater",
 			resType: "json",
 			doesSync: true,
 
@@ -114,7 +116,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
 		DOM.xhr({
 			type: "POST",
-			url: "api/tpd",
+			url: "api/feature/TPD",
 			resType: "json",
 			doesSync: true,
 

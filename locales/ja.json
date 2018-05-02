@@ -1,4 +1,9 @@
 {
+	"common.yes": "はい",
+	"common.no": "いいえ",
+	"common.ok": "OK",
+	"common.cancel": "キャンセル",
+	"common.launch": "実行",
 	"common.signIn": "ログイン",
 	"common.signOut": "ログアウト",
 	"common.running": "処理中...",
@@ -25,10 +30,24 @@
 	"controlPanel.tpd": "1日当たりの平均トゥート数",
 	"controlPanel.relevanceAnalyzer": "ユーザーとの親密度",
 
-	"controlPanel.relevanceAnalyzer.rangeConfirmer.details": [
+	"relevanceAnalyzer.rangeConfirmer.details": [
 		"取得範囲を選択して下さい。",
 		"<Span Class = 'red-text'>※取得範囲が長いほど処理に時間が掛かります！！！</Span>"
 	],
+
+	"relevanceAnalyzer.rangeConfirmer.range": "取得範囲",
+	"relevanceAnalyzer.rangeConfirmer.range0": "本日分のみ",
+	"relevanceAnalyzer.rangeConfirmer.range1": "1日前まで",
+	"relevanceAnalyzer.rangeConfirmer.range2": "2日前まで",
+	"relevanceAnalyzer.rangeConfirmer.range3": "3日前まで",
+	"relevanceAnalyzer.rangeConfirmer.range4": "4日前まで",
+	"relevanceAnalyzer.rangeConfirmer.range5": "5日前まで",
+	"relevanceAnalyzer.rangeConfirmer.range6": "6日前まで",
+	"relevanceAnalyzer.rangeConfirmer.range7": "1週間前まで",
+	"relevanceAnalyzer.rangeConfirmer.skipConfirm": "投稿確認画面をスキップ",
+
+	"relevanceAnalyzer.rankingConfirmer.title": "ランキング内容の確認 | Relevance Analyzer",
+	"relevanceAnalyzer.rankingConfirmer.details": "以下のランキング内容でトゥートします。",
 
 	"contactPanel.details": [
 		"不具合や分からない事などございましたら、お気軽に<A Href = 'https://itabashi.0j0.jp/@ProgrammerGenboo' Target = '_blank'>こちら</A>までご連絡下さい。",

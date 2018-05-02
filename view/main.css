@@ -20,3 +20,13 @@ Main > Section {
 Main > Section#controlPanel #controlPanel-currentInstance {
 	Text-Decoration: Underline;
 }
+
+Main > Section#controlPanel > #feature > #feature-relevanceAnalyzer #feature-relevanceAnalyzer-rankingConfirmer-ranking {
+	Max-Height: 50vh;
+	Padding: 1em;
+
+	Overflow: Auto;
+	White-Space: Pre-Line;
+	
+	Border: Thin Solid RGBA(0, 0, 0, 0.25);
+}
