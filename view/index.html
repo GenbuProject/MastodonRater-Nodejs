@@ -19,12 +19,12 @@
 
 		<Link Rel = "StyleSheet" Href = "https://fonts.googleapis.com/icon?family=Roboto" />
 		<Link Rel = "StyleSheet" Href = "https://fonts.googleapis.com/icon?family=Material+Icons" />
-		<Link Rel = "StyleSheet" Href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-alpha.4/css/materialize.min.css" />
-		<Script Src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-alpha.4/js/materialize.min.js"></Script>
+		<Link Rel = "StyleSheet" Href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css" />
+		<Script Src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></Script>
 
 		<Script Src = "lib/CookieStore.js"></Script>
-		<Script Src = "lib/Locale.js"></Script>
 		<Script Src = "lib/XHR.js"></Script>
+		<Script Src = "lib/Locale.js"></Script>
 		<Script Src = "main.js" Defer></Script>
 		<Link Rel = "StyleSheet" Href = "main.css" />
 	</Head>
@@ -155,17 +155,57 @@
 						<A Class = "secondary-content modal-trigger" Href = "#" Data-Target = "feature-relevanceAnalyzer-rangeConfirmer"><I Class = "material-icons">launch</I></A>
 						<Span Class = "secondary-content badge new disabled" Data-Badge-Caption = "" Locale-Message = "common.running">Now Running...</Span>
 
-						<Div ID = "feature-relevanceAnalyzer-rangeConfirmer" Class = "modal">
+						<Div ID = "feature-relevanceAnalyzer-rangeConfirmer" Class = "modal modal-fixed-footer">
 							<Div Class = "modal-content">
-								<P Locale-Message = "controlPanel.relevanceAnalyzer.rangeConfirmer.details">
-									Please select date range.<Br />
-									It'll get information based on provided one.<Br />
+								<P Locale-Message = "relevanceAnalyzer.rangeConfirmer.details">
+									Please select date range, and it will be used to get information.<Br />
 									<Span Class = 'red-text'>(* Longer the range, longer the time you'll spend!)</Span>
 								</P>
+								
+								<Div Class = "input-field">
+									<Select ID = "feature-relevanceAnalyzer-rangeConfirmer-range">
+										<Option Value = "0" Locale-Message = "relevanceAnalyzer.rangeConfirmer.range0" Selected>Today only</Option>
+										<Option Value = "1" Locale-Message = "relevanceAnalyzer.rangeConfirmer.range1">Between today and yesterday</Option>
+										<Option Value = "2" Locale-Message = "relevanceAnalyzer.rangeConfirmer.range2">Between today to 2 days before</Option>
+										<Option Value = "3" Locale-Message = "relevanceAnalyzer.rangeConfirmer.range3">Between today to 3 days before</Option>
+										<Option Value = "4" Locale-Message = "relevanceAnalyzer.rangeConfirmer.range4">Between today to 4 days before</Option>
+										<Option Value = "5" Locale-Message = "relevanceAnalyzer.rangeConfirmer.range5">Between today to 5 days before</Option>
+										<Option Value = "6" Locale-Message = "relevanceAnalyzer.rangeConfirmer.range6">Between today to 6 days before</Option>
+										<Option Value = "7" Locale-Message = "relevanceAnalyzer.rangeConfirmer.range7">Between today to last week</Option>
+									</Select>
+
+									<Label Locale-Message = "relevanceAnalyzer.rangeConfirmer.range">Date range</Label>
+								</Div>
+
+								<Div>
+									<Label>
+										<Input ID = "feature-relevanceAnalyzer-rangeConfirmer-skipConfirm" Type = "Checkbox" />
+										<Span Locale-Message = "relevanceAnalyzer.rangeConfirmer.skipConfirm">Will you skip over confirming a ranking before tooting?</Span>
+									</Label>
+								</Div>
 							</Div>
 
 							<Div Class = "modal-footer">
-								<A Class = "btn-flat modal-action modal-close waves-effect waves-light">OK</A>
+								<A Class = "btn-flat modal-action modal-close waves-effect waves-red" Locale-Message = "common.cancel">Cancel</A>
+								<A ID = "feature-relevanceAnalyzer-rangeConfirmer-launch" Class = "btn-flat modal-action modal-close waves-effect waves-green" Locale-Message = "common.launch">Launch</A>
+							</Div>
+						</Div>
+
+						<Div ID = "feature-relevanceAnalyzer-rankingConfirmer" Class = "modal modal-fixed-footer">
+							<Div Class = "modal-content">
+								<H5 Class = "blue-text" Locale-Message = "relevanceAnalyzer.rankingConfirmer.title">Confirm ranking | Relevance Analyzer</H2>
+								<P Locale-Message = "relevanceAnalyzer.rankingConfirmer.details">
+									Please accept to toot this ranking.
+								</P>
+								
+								<Div ID = "feature-relevanceAnalyzer-rankingConfirmer-ranking">
+
+								</Div>
+							</Div>
+
+							<Div Class = "modal-footer">
+								<A Class = "btn-flat modal-action modal-close waves-effect waves-red" Locale-Message = "common.cancel">Cancel</A>
+								<A ID = "feature-relevanceAnalyzer-rankingConfirmer-launch" Class = "btn-flat modal-action modal-close waves-effect waves-green" Locale-Message = "common.launch">Launch</A>
 							</Div>
 						</Div>
 					</Li>
