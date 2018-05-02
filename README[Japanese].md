@@ -10,10 +10,6 @@
 
 ## 概要 | Overview
 当サービスは、MastodonAPIを利用して様々な指標を算出するツールです。
-
-各インスタンスへの対応は手動となっております。<Br />
-導入をお考えの方は、お手数お掛け致しますが[こちら](mailto:genbuproject@gmail.com)までご連絡ください。
-
 Herokuへのデプロイ方法は[こちら](/DeployToHeroku.md)を参照してください。
 
 ## 機能一覧 | Features
@@ -32,8 +28,7 @@ Herokuへのデプロイ方法は[こちら](/DeployToHeroku.md)を参照して�
 * [@ProgrammerGenboo(神崎丼)](https://knzk.me/@ProgrammerGenboo)
 * [@ProgrammerGenboo(Yづドン)](https://mstdn.y-zu.org/@ProgrammerGenboo)
 * [どっかのGenboo。(Google+)](https://plus.google.com/106666684430101995501)
-
-ご自分のインスタンスへの反映は、お手数お掛け致しますがこちらまでご連絡下さい。
+* [ProgrammerGenboo(Eメール)](mailto:programmergenboo@gmail.com)
 * [Genbu Project](mailto:genbuproject@gmail.com)
 
 ## ライセンス | License
