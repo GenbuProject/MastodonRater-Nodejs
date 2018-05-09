@@ -28,7 +28,8 @@ let app = express();
 
 
 
-		const { instance, redirectTo } = req.query;
+		const instance = req.query.instance.replace(/\/$/, "");
+		const { redirectTo } = req.query;
 
 		if (!instance || !redirectTo) {
 			res.status(400).end(R.API_END_WITH_ERROR(new TypeError("2 queries, 'instance' and 'redirectTo' are required.")));
@@ -49,7 +50,8 @@ let app = express();
 
 
 
-		const { instance, redirectTo } = req.query;
+		const instance = req.query.instance.replace(/\/$/, "");
+		const { redirectTo } = req.query;
 
 		if (!instance || !redirectTo) {
 			res.status(400).end(R.API_END_WITH_ERROR(new TypeError("2 queries, 'instance' and 'redirectTo' are required.")));
@@ -69,8 +71,8 @@ let app = express();
 		}
 
 
-
-		const { instance, redirectTo } = req.body;
+		const instance = req.body.instance.replace(/\/$/, "");
+		const { redirectTo } = req.body;
 		
 		if (!instance || !redirectTo) {
 			res.status(400).end(R.API_END_WITH_ERROR(new TypeError("2 payloads, 'instance' and 'redirectTo' are required.")));
@@ -104,7 +106,8 @@ let app = express();
 	 * Gets user's token from received code
 	 */
 	app.get("/api/token", (req, res) => {
-		const { instance, clientId, secretId, code, redirectTo } = req.query;
+		const instance = req.query.instance.replace(/\/$/, "");
+		const { clientId, secretId, code, redirectTo } = req.query;
 
 		if (!instance || !clientId || !secretId || !code || !redirectTo) {
 			res.status(400).end(R.API_END_WITH_ERROR(new TypeError("5 queries, 'instance', 'clientId', 'secretId', 'code', and 'redirectTo' are required.")));
@@ -123,7 +126,8 @@ let app = express();
 	 * Toots with provided contents
 	 */
 	app.post("/api/toot", (req, res) => {
-		const { instance, token, privacy, status } = req.body;
+		const instance = req.body.instance.replace(/\/$/, "");
+		const { token, privacy, status } = req.body;
 
 		if (!instance || !token) {
 			res.status(400).end(R.API_END_WITH_ERROR(new TypeError("2 payloads, 'instance' and 'token' are required.")));
@@ -142,7 +146,8 @@ let app = express();
 	 * Executes Toot Rater
 	 */
 	app.post("/api/feature/TootRater", (req, res) => {
-		const { instance, token, privacy } = req.body;
+		const instance = req.body.instance.replace(/\/$/, "");
+		const { token, privacy } = req.body;
 
 		if (!instance || !token) {
 			res.status(400).end(R.API_END_WITH_ERROR(new TypeError("2 payloads, 'instance' and 'token' are required.")));
@@ -181,7 +186,8 @@ let app = express();
 	 * Executes TPD
 	 */
 	app.post("/api/feature/TPD", (req, res) => {
-		const { instance, token, privacy } = req.body;
+		const instance = req.body.instance.replace(/\/$/, "");
+		const { token, privacy } = req.body;
 
 		if (!instance || !token) {
 			res.status(400).end(R.API_END_WITH_ERROR(new TypeError("2 payloads, 'instance' and 'token' are required.")));
@@ -219,7 +225,8 @@ let app = express();
 	 * Executes Relevance Analyzer
 	 */
 	app.post("/api/feature/RelevanceAnalyzer", (req, res) => {
-		const { instance, token, privacy, isImmediately } = req.body;
+		const instance = req.body.instance.replace(/\/$/, "");
+		const { token, privacy, isImmediately } = req.body;
 		let { dateRange } = req.body;
 
 		if (!instance || !token) {
