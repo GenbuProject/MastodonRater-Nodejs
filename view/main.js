@@ -33,7 +33,7 @@ window.addEventListener("DOMContentLoaded", () => {
 	});
 
 	signInBtn.addEventListener("click", () => {
-		const instance = instanceInputter.value;
+		const instance = instanceInputter.value.replace(/\/$/, "");
 
 		if (instance && instanceInputter.checkValidity()) {
 			fetch(`api/exists?instance=${instance}&redirectTo=${SITEURL}`).then(res => res.json()).then(res => {
