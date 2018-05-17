@@ -123,6 +123,17 @@ let app = express();
 	});
 
 	/**
+	 * Gets how provided token is valid
+	 */
+	app.get("/api/tokenValidate", (req, res) => {
+		const instance = req.query.instance.replace(/\/$/, "");
+		const { token } = req.query;
+
+		let Mstdn = new Mastodon({ api_url: `${instance}/api/v1/`, access_token: token });
+			Mstdn.get("accounts/verify_credentials").then(info => res.end(R.API_END({ valid: !info.data.error })));
+	});
+
+	/**
 	 * Toots with provided contents
 	 */
 	app.post("/api/toot", (req, res) => {

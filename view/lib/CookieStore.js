@@ -74,11 +74,11 @@ class CookieStore {
 			for (let name in options) {
 				switch (name) {
 					default:
-						cookie += `${encodeURIComponent(name)}=${encodeURIComponent(options[name])}; `;
+						cookie += `${encodeURIComponent(name)}=${options[name]}; `;
 						break;
 
 					case "maxAge":
-						cookie += `max-age=${encodeURIComponent(options[name])}; `;
+						cookie += `max-age=${options[name]}; `;
 						break;
 
 					case "secure":
@@ -94,11 +94,13 @@ class CookieStore {
 
 	/**
 	 * Remove a cookie
+	 * 
 	 * @param {String} key Cookie's key
+	 * @param {Object} options Cookie's options
 	 */
-	delete (key = "") {
+	delete (key = "", options = {}) {
 		if (!key) throw new TypeError('An argument, "key" is not acceptable.');
 
-		this.set(key, "", { maxAge: -1 });
+		this.set(key, "", Object.assign({ maxAge: -1 }, options));
 	}
 }

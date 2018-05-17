@@ -227,12 +227,24 @@ window.addEventListener("DOMContentLoaded", () => {
 });
 
 window.addEventListener("DOMContentLoaded", () => {
-	if (cookieStore.get("MR-instance") && cookieStore.get("MR-token")) {
-		controlPanel.classList.remove("disabled");
-		signOutBtnOnHeader.classList.remove("disabled");
-		signOutBtnOnSidebar.classList.remove("disabled");
+	const instance = cookieStore.get("MR-instance");
+	const token = cookieStore.get("MR-token");
 
-		currentInstance.textContent = currentInstance.href = cookieStore.get("MR-instance");
+	if (instance && token) {
+		fetch(`api/tokenValidate?instance=${instance}&token=${token}`).then(res => res.json()).then(info => {
+			if (!info.valid) {
+				cookieStore.delete("MR-instance");
+				cookieStore.delete("MR-token");
+
+				location.href = SITEURL;
+			} else {
+				controlPanel.classList.remove("disabled");
+				signOutBtnOnHeader.classList.remove("disabled");
+				signOutBtnOnSidebar.classList.remove("disabled");
+
+				currentInstance.textContent = currentInstance.href = cookieStore.get("MR-instance");
+			}
+		});
 	} else {
 		signInPanel.classList.remove("disabled");
 	}
