@@ -9,6 +9,7 @@ const R = require("./lib/Resources");
 require("dotenv").config();
 
 
+
 const SITEURL = "https://mastodon-rater.herokuapp.com/";
 const Mongo = new MongoHandler(process.env.DB_URI, process.env.DB_NAME);
 
@@ -16,6 +17,16 @@ let app = express();
 	app.use(bodyParser.json());
 	app.use("/", express.static(`${__dirname}/view`));
 	app.use("/locales", express.static(`${__dirname}/locales`));
+
+	app.set("PORT", process.env.PORT);
+
+	app.all("*", (req, res, next) => {
+		if (req.headers["x-forwarded-proto"] && req.headers["x-forwarded-proto"] === "http") {
+			res.redirect('https://' + req.headers.host + req.url);
+		} else {
+			return next();
+		}
+	});
 
 	/**
 	 * Gets whether MastodonRater exists in the instance
@@ -25,8 +36,6 @@ let app = express();
 			res.status(400).end(R.API_END_WITH_ERROR(R.ERROR.ENV.DB_URI));
 			return;
 		}
-
-
 
 		const instance = req.query.instance.replace(/\/$/, "");
 		const { redirectTo } = req.query;
@@ -48,8 +57,6 @@ let app = express();
 			return;
 		}
 
-
-
 		const instance = req.query.instance.replace(/\/$/, "");
 		const { redirectTo } = req.query;
 
@@ -69,7 +76,6 @@ let app = express();
 			res.status(400).end(R.API_END_WITH_ERROR(R.ERROR.ENV.DB_URI));
 			return;
 		}
-
 
 		const instance = req.body.instance.replace(/\/$/, "");
 		const { redirectTo } = req.body;
@@ -331,6 +337,7 @@ let app = express();
 
 
 
-let listener = app.listen((process.env.PORT || 8001), () => {
-	console.log(`[MastodonRater] I'm running on port:${listener.address().port}✨`);
+let listener = app.listen((app.get("PORT") || 8001), () => {
+	app.set("PORT", listener.address().port);
+	console.log(`[MastodonRater] I'm running on port:${app.get("PORT")}✨`);
 });
