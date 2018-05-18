@@ -33,7 +33,7 @@ window.addEventListener("DOMContentLoaded", () => {
 	});
 
 	signInBtn.addEventListener("click", () => {
-		const instance = instanceInputter.value.replace(/\/$/, "");
+		const instance = instanceInputter.value.replace(/\/$/, "").toLowerCase();
 
 		if (instance && instanceInputter.checkValidity()) {
 			fetch(`api/exists?instance=${instance}&redirectTo=${SITEURL}`).then(res => res.json()).then(res => {
@@ -68,6 +68,7 @@ window.addEventListener("DOMContentLoaded", () => {
 					});
 				}
 			}).catch(error => {
+				M.toast({ html: definedMessages["signInPanel.error.invalidInstance"] });
 				throw error;
 			}).then(info => {
 				cookieStore.set("MR-instance", instance);
