@@ -21,7 +21,7 @@ let app = express();
 	app.set("PORT", process.env.PORT || 8001);
 
 	app.all("*", (req, res, next) => {
-		if (req.host !== "localhost" && req.protocol === "http") {
+		if (req.hostname !== "localhost" && req.protocol === "http") {
 			res.redirect("https://" + req.headers.host + req.url);
 		} else {
 			return next();
