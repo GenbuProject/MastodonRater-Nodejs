@@ -10,25 +10,18 @@ require("dotenv").config();
 
 
 
-const SITEURL = "https://mastodon-rater.herokuapp.com/";
+const SITEURL = "https://mastodon-rater.herokuapp.com";
 const Mongo = new MongoHandler(process.env.DB_URI, process.env.DB_NAME);
 
 let app = express();
+	app.set("PORT:HTTP", process.env.PORT || 8001);
+
 	app.use(bodyParser.json());
 	app.use("/", express.static(`${__dirname}/view`));
-	app.use("/locales", express.static(`${__dirname}/locales`));
-
-	app.set("PORT", process.env.PORT || 8001);
-
-	app.all("*", (req, res, next) => {
-		if (req.hostname !== "localhost" && req.protocol === "http") {
-			res.redirect("https://" + req.headers.host + req.url);
-		} else {
-			return next();
-		}
-	});
+	app.use("/locale", express.static(`${__dirname}/locale`));
 
 	/**
+	 * <GET>
 	 * Gets whether MastodonRater exists in the instance
 	 */
 	app.get("/api/exists", (req, res) => {
@@ -49,9 +42,13 @@ let app = express();
 	});
 
 	/**
+	 * <GET>
 	 * Gets information of MastodonRater in the instance
+	 * 
+	 * <POST>
+	 * Generates MastodonRater in the instance
 	 */
-	app.get("/api/app", (req, res) => {
+	app.route("/api/app").get((req, res) => {
 		if (!Mongo.db) {
 			res.status(400).end(R.API_END_WITH_ERROR(R.ERROR.ENV.DB_URI));
 			return;
@@ -66,12 +63,7 @@ let app = express();
 		}
 
 		Mongo.getApp(instance, redirectTo).then(info => res.end(R.API_END(info)));
-	});
-
-	/**
-	 * Generates MastodonRater in the instance
-	 */
-	app.post("/api/app", (req, res) => {
+	}).post((req, res) => {
 		if (!Mongo.db) {
 			res.status(400).end(R.API_END_WITH_ERROR(R.ERROR.ENV.DB_URI));
 			return;
@@ -109,6 +101,7 @@ let app = express();
 	});
 
 	/**
+	 * <GET>
 	 * Gets user's token from received code
 	 */
 	app.get("/api/token", (req, res) => {
@@ -129,6 +122,7 @@ let app = express();
 	});
 
 	/**
+	 * <GET>
 	 * Gets how provided token is valid
 	 */
 	app.get("/api/tokenValidate", (req, res) => {
@@ -140,6 +134,7 @@ let app = express();
 	});
 
 	/**
+	 * <POST>
 	 * Toots with provided contents
 	 */
 	app.post("/api/toot", (req, res) => {
@@ -160,6 +155,7 @@ let app = express();
 	});
 
 	/**
+	 * <POST>
 	 * Executes Toot Rater
 	 */
 	app.post("/api/feature/TootRater", (req, res) => {
@@ -200,6 +196,7 @@ let app = express();
 	});
 
 	/**
+	 * <POST>
 	 * Executes TPD
 	 */
 	app.post("/api/feature/TPD", (req, res) => {
@@ -239,6 +236,7 @@ let app = express();
 	});
 
 	/**
+	 * <POST>
 	 * Executes Relevance Analyzer
 	 */
 	app.post("/api/feature/RelevanceAnalyzer", (req, res) => {
@@ -337,6 +335,4 @@ let app = express();
 
 
 
-app.listen(app.get("PORT"), () => {
-	console.log(`[MastodonRater] I'm running on port:${app.get("PORT")}✨`);
-});
+app.listen(app.get("PORT:HTTP"), () => console.log(`[MastodonRater] I'm running on port:${app.get("PORT:HTTP")}✨`));

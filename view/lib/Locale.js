@@ -4,7 +4,7 @@ class Locale {
 	}
 
 	static load (languageCode = "en") {
-		return fetch(`locales/${languageCode}.json`).catch(error => fetch("locales/en.json")).then(response => response.json()).then(messages => messages);
+		return fetch(`locale/${languageCode}.json`).catch(error => fetch("locale/en.json")).then(response => response.json()).then(messages => messages);
 	}
 
 	static apply (messages = {}) {
