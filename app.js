@@ -18,11 +18,11 @@ let app = express();
 	app.use("/", express.static(`${__dirname}/view`));
 	app.use("/locales", express.static(`${__dirname}/locales`));
 
-	app.set("PORT", process.env.PORT);
+	app.set("PORT", process.env.PORT || 8001);
 
 	app.all("*", (req, res, next) => {
-		if (req.headers["x-forwarded-proto"] && req.headers["x-forwarded-proto"] === "http") {
-			res.redirect('https://' + req.headers.host + req.url);
+		if (req.host !== "localhost" && req.protocol === "http") {
+			res.redirect("https://" + req.headers.host + req.url);
 		} else {
 			return next();
 		}
@@ -337,7 +337,6 @@ let app = express();
 
 
 
-let listener = app.listen((app.get("PORT") || 8001), () => {
-	app.set("PORT", listener.address().port);
+app.listen(app.get("PORT"), () => {
 	console.log(`[MastodonRater] I'm running on port:${app.get("PORT")}✨`);
 });
