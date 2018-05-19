@@ -14,7 +14,8 @@
 
 	"signInPanel.details": "Please sign in with your Mastodon account before using MastodonRater.",
 	"signInPanel.instance": ["Your instance(ex: <A Href = 'https://itabashi.0j0.jp' Target = '_blank'>https://itabashi.0j0.jp</A>)"],
-	"signInPanel.error.invalidInstance": "Provided URL isn't acceptable as an instance of Mastodon.",
+	"signInPanel.error.invalidUrl": "A provided link is unacceptable.",
+	"signInPanel.error.invalidInstance": "A provided link isn't acceptable as an instance of Mastodon.",
 
 	"controlPanel.details": [
 		"Welcome to MastodonRater!",
