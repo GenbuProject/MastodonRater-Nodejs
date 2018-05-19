@@ -33,48 +33,51 @@ window.addEventListener("DOMContentLoaded", () => {
 	});
 
 	signInBtn.addEventListener("click", () => {
-		const instance = instanceInputter.value.replace(/\/$/, "").toLowerCase();
-
-		if (instance && instanceInputter.checkValidity()) {
-			fetch(`api/exists?instance=${instance}&redirectTo=${SITEURL}`).then(res => res.json()).then(res => {
-				if (res.exists) {
-					return fetch(`api/app?instance=${instance}&redirectTo=${SITEURL}`).then(res => res.json());
-				} else {
-					return new Promise((resolve, reject) => {
-						DOM.xhr({
-							type: "POST",
-							url: "api/app",
-							resType: "json",
-							doesSync: true,
-
-							headers: { "Content-Type": "application/json" },
-
-							data: JSON.stringify({
-								instance,
-								redirectTo: SITEURL
-							}),
-
-							onLoad (event) {
-								const { status, response } = event.target;
-
-								if (status == 400) {
-									reject(response.error);
-									return;
-								}
-
-								resolve(response);
-							}
-						});
-					});
-				}
-			}).catch(error => {
-				M.toast({ html: definedMessages["signInPanel.error.invalidInstance"] });
-				throw error;
-			}).then(info => {
-				cookieStore.set("MR-instance", instance);
-				location.href = info.authUrl;
-			});
+		if (!instanceInputter.value || !instanceInputter.checkValidity()) {
+			M.toast({ html: definedMessages["signInPanel.error.invalidUrl"] });
+			return;
 		}
+
+		const instance = new URL(instanceInputter.value).origin;
+
+		fetch(`api/exists?instance=${instance}&redirectTo=${SITEURL}`).then(res => res.json()).then(res => {
+			if (res.exists) {
+				return fetch(`api/app?instance=${instance}&redirectTo=${SITEURL}`).then(res => res.json());
+			} else {
+				return new Promise((resolve, reject) => {
+					DOM.xhr({
+						type: "POST",
+						url: "api/app",
+						resType: "json",
+						doesSync: true,
+
+						headers: { "Content-Type": "application/json" },
+
+						data: JSON.stringify({
+							instance,
+							redirectTo: SITEURL
+						}),
+
+						onLoad (event) {
+							const { status, response } = event.target;
+
+							if (status == 400) {
+								reject(response.error);
+								return;
+							}
+
+							resolve(response);
+						}
+					});
+				});
+			}
+		}).catch(error => {
+			M.toast({ html: definedMessages["signInPanel.error.invalidInstance"] });
+			throw error;
+		}).then(info => {
+			cookieStore.set("MR-instance", instance);
+			location.href = info.authUrl;
+		});
 	});
 
 	privacySelector.addEventListener("change", event => {
@@ -237,12 +240,21 @@ window.addEventListener("DOMContentLoaded", () => {
 				cookieStore.delete("MR-instance");
 				cookieStore.delete("MR-token");
 
-				location.href = SITEURL;
+				fetch(`api/exists?instance=${instance}&redirectTo=${SITEURL}`).then(res => res.json()).then(info => {
+					if (info.exists) {
+						return fetch(`api/app`, {
+							method: "DELETE",
+							headers: { "Content-Type": "application/json" },
+
+							body: JSON.stringify({ instance })
+						});
+					}
+				}).then(() => location.href = SITEURL);
 			} else {
 				controlPanel.classList.remove("disabled");
 				signOutBtnOnHeader.classList.remove("disabled");
 				signOutBtnOnSidebar.classList.remove("disabled");
-
+				
 				currentInstance.textContent = currentInstance.href = cookieStore.get("MR-instance");
 			}
 		});

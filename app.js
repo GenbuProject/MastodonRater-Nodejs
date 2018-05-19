@@ -5,7 +5,7 @@ const MongoHandler = require("./lib/MongoHandler");
 const APIHandler = require("./lib/APIHandler");
 const R = require("./lib/Resources");
 
-//This code is for only developing
+//I'm for only developing!
 require("dotenv").config();
 
 
@@ -30,8 +30,7 @@ let app = express();
 			return;
 		}
 
-		const instance = req.query.instance.replace(/\/$/, "");
-		const { redirectTo } = req.query;
+		const { instance, redirectTo } = req.query;
 
 		if (!instance || !redirectTo) {
 			res.status(400).end(R.API_END_WITH_ERROR(new TypeError("2 queries, 'instance' and 'redirectTo' are required.")));
@@ -47,6 +46,9 @@ let app = express();
 	 * 
 	 * <POST>
 	 * Generates MastodonRater in the instance
+	 * 
+	 * <DELETE>
+	 * Removes information of MastodonRater from the instance
 	 */
 	app.route("/api/app").get((req, res) => {
 		if (!Mongo.db) {
@@ -54,8 +56,7 @@ let app = express();
 			return;
 		}
 
-		const instance = req.query.instance.replace(/\/$/, "");
-		const { redirectTo } = req.query;
+		const { instance, redirectTo } = req.query;
 
 		if (!instance || !redirectTo) {
 			res.status(400).end(R.API_END_WITH_ERROR(new TypeError("2 queries, 'instance' and 'redirectTo' are required.")));
@@ -68,9 +69,8 @@ let app = express();
 			res.status(400).end(R.API_END_WITH_ERROR(R.ERROR.ENV.DB_URI));
 			return;
 		}
-
-		const instance = req.body.instance.replace(/\/$/, "");
-		const { redirectTo } = req.body;
+		
+		const { instance, redirectTo } = req.body;
 		
 		if (!instance || !redirectTo) {
 			res.status(400).end(R.API_END_WITH_ERROR(new TypeError("2 payloads, 'instance' and 'redirectTo' are required.")));
@@ -98,6 +98,14 @@ let app = express();
 				});
 			}
 		});
+	}).delete((req, res) => {
+		if (!Mongo.db) {
+			res.status(400).end(R.API_END_WITH_ERROR(R.ERROR.ENV.DB_URI));
+			return;
+		}
+
+		const { instance } = req.body;
+		Mongo.removeApp(instance).then(() => res.end(R.API_END()));
 	});
 
 	/**
@@ -105,8 +113,7 @@ let app = express();
 	 * Gets user's token from received code
 	 */
 	app.get("/api/token", (req, res) => {
-		const instance = req.query.instance.replace(/\/$/, "");
-		const { clientId, secretId, code, redirectTo } = req.query;
+		const { instance, clientId, secretId, code, redirectTo } = req.query;
 
 		if (!instance || !clientId || !secretId || !code || !redirectTo) {
 			res.status(400).end(R.API_END_WITH_ERROR(new TypeError("5 queries, 'instance', 'clientId', 'secretId', 'code', and 'redirectTo' are required.")));
@@ -123,11 +130,10 @@ let app = express();
 
 	/**
 	 * <GET>
-	 * Gets how provided token is valid
+	 * Gets whether a provided token is valid
 	 */
 	app.get("/api/tokenValidate", (req, res) => {
-		const instance = req.query.instance.replace(/\/$/, "");
-		const { token } = req.query;
+		const { instance, token } = req.query;
 
 		let Mstdn = new Mastodon({ api_url: `${instance}/api/v1/`, access_token: token });
 			Mstdn.get("accounts/verify_credentials").then(info => res.end(R.API_END({ valid: !info.data.error })));
@@ -138,8 +144,7 @@ let app = express();
 	 * Toots with provided contents
 	 */
 	app.post("/api/toot", (req, res) => {
-		const instance = req.body.instance.replace(/\/$/, "");
-		const { token, privacy, status } = req.body;
+		const { instance, token, privacy, status } = req.body;
 
 		if (!instance || !token) {
 			res.status(400).end(R.API_END_WITH_ERROR(new TypeError("2 payloads, 'instance' and 'token' are required.")));
@@ -159,8 +164,7 @@ let app = express();
 	 * Executes Toot Rater
 	 */
 	app.post("/api/feature/TootRater", (req, res) => {
-		const instance = req.body.instance.replace(/\/$/, "");
-		const { token, privacy } = req.body;
+		const { instance, token, privacy } = req.body;
 
 		if (!instance || !token) {
 			res.status(400).end(R.API_END_WITH_ERROR(new TypeError("2 payloads, 'instance' and 'token' are required.")));
@@ -200,8 +204,7 @@ let app = express();
 	 * Executes TPD
 	 */
 	app.post("/api/feature/TPD", (req, res) => {
-		const instance = req.body.instance.replace(/\/$/, "");
-		const { token, privacy } = req.body;
+		const { instance, token, privacy } = req.body;
 
 		if (!instance || !token) {
 			res.status(400).end(R.API_END_WITH_ERROR(new TypeError("2 payloads, 'instance' and 'token' are required.")));
@@ -240,8 +243,7 @@ let app = express();
 	 * Executes Relevance Analyzer
 	 */
 	app.post("/api/feature/RelevanceAnalyzer", (req, res) => {
-		const instance = req.body.instance.replace(/\/$/, "");
-		const { token, privacy, isImmediately } = req.body;
+		const { instance, token, privacy, isImmediately } = req.body;
 		let { dateRange } = req.body;
 
 		if (!instance || !token) {
