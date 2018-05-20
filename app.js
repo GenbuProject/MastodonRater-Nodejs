@@ -1,3 +1,4 @@
+const dotenv = require("dotenv");
 const express = require("express");
 const bodyParser = require("body-parser");
 const Mastodon = require("mastodon-api");
@@ -6,7 +7,7 @@ const APIHandler = require("./lib/APIHandler");
 const R = require("./lib/Resources");
 
 //I'm for only developing!
-require("dotenv").config();
+if (dotenv) dotenv.config();
 
 
 

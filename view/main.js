@@ -26,7 +26,7 @@ const RARankingConfirmerCancel = RARankingConfirmer.querySelector(".modal-footer
 
 window.addEventListener("DOMContentLoaded", () => {
 	fetch("api/apps").then(res => res.json()).then(info => {
-		let data = {};
+		const data = {};
 		info.instances.forEach(instance => data[instance.name] = `${instance.name}/favicon.ico`);
 
 		M.Autocomplete.init(instanceInputter, { data });
