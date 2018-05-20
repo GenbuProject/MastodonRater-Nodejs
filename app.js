@@ -13,6 +13,9 @@ require("dotenv").config();
 const SITEURL = "https://mastodon-rater.herokuapp.com";
 const Mongo = new MongoHandler(process.env.DB_URI, process.env.DB_NAME);
 
+if (!process.env.DB_URI) throw R.ERROR.ENV.DB_URI;
+if (!process.env.DB_NAME) throw R.ERROR.ENV.DB_NAME;
+
 let app = express();
 	app.set("PORT:HTTP", process.env.PORT || 8001);
 
@@ -25,11 +28,6 @@ let app = express();
 	 * Gets whether MastodonRater exists in the instance
 	 */
 	app.get("/api/exists", (req, res) => {
-		if (!Mongo.db) {
-			res.status(400).end(R.API_END_WITH_ERROR(R.ERROR.ENV.DB_URI));
-			return;
-		}
-
 		const { instance, redirectTo } = req.query;
 
 		if (!instance || !redirectTo) {
@@ -38,6 +36,14 @@ let app = express();
 		}
 
 		Mongo.existsApp(instance, redirectTo).then(exists => res.end(R.API_END({ exists })));
+	});
+
+	/**
+	 * <GET>
+	 * Gets a list of connected instances
+	 */
+	app.get("/api/apps", (req, res) => {
+		Mongo.getInstances().then(instances => res.end(R.API_END({ instances })));
 	});
 
 	/**
@@ -51,11 +57,6 @@ let app = express();
 	 * Removes information of MastodonRater from the instance
 	 */
 	app.route("/api/app").get((req, res) => {
-		if (!Mongo.db) {
-			res.status(400).end(R.API_END_WITH_ERROR(R.ERROR.ENV.DB_URI));
-			return;
-		}
-
 		const { instance, redirectTo } = req.query;
 
 		if (!instance || !redirectTo) {
@@ -65,11 +66,6 @@ let app = express();
 
 		Mongo.getApp(instance, redirectTo).then(info => res.end(R.API_END(info)));
 	}).post((req, res) => {
-		if (!Mongo.db) {
-			res.status(400).end(R.API_END_WITH_ERROR(R.ERROR.ENV.DB_URI));
-			return;
-		}
-		
 		const { instance, redirectTo } = req.body;
 		
 		if (!instance || !redirectTo) {
@@ -99,11 +95,6 @@ let app = express();
 			}
 		});
 	}).delete((req, res) => {
-		if (!Mongo.db) {
-			res.status(400).end(R.API_END_WITH_ERROR(R.ERROR.ENV.DB_URI));
-			return;
-		}
-
 		const { instance } = req.body;
 		Mongo.removeApp(instance).then(() => res.end(R.API_END()));
 	});

@@ -23,6 +23,15 @@ const RARankingConfirmerLaunch = RARankingConfirmer.querySelector("#feature-rele
 const RARankingConfirmerCancel = RARankingConfirmer.querySelector(".modal-footer > A.modal-close:Not(.modal-action)");
 
 window.addEventListener("DOMContentLoaded", () => {
+	fetch("api/apps").then(res => res.json()).then(info => {
+		let data = {};
+		info.instances.forEach(instance => data[instance.name] = `${instance.name}/favicon.ico`);
+
+		M.Autocomplete.init(instanceInputter, { data });
+	});
+});
+
+window.addEventListener("DOMContentLoaded", () => {
 	[signOutBtnOnHeader, signOutBtnOnSidebar].forEach(signOutBtn => {
 		signOutBtn.addEventListener("click", () => {
 			cookieStore.set("MR-instance", "");
