@@ -3,6 +3,28 @@ class Locale {
 		return cookieStore.get("MR-lang");
 	}
 
+	/**
+	 * @param {String} eventname
+	 * @returns {Promise}
+	 */
+	static on (eventname) {
+		if (!eventname) throw new TypeError("An argument, 'eventname' is required.");
+
+		return new Promise(resolve => {
+			switch (eventname) {
+				case "load":
+					let detector = setInterval(() => {
+						if (Locale.loaded) {
+							clearInterval(detector);
+							resolve(definedMessages);
+						}
+					});
+
+					break;
+			}
+		});
+	}
+
 	static load (languageCode = "en") {
 		return fetch(`locale/${languageCode}.json`).catch(error => fetch("locale/en.json")).then(response => response.json()).then(messages => messages);
 	}
@@ -81,6 +103,7 @@ window.addEventListener("DOMContentLoaded", () => {
 			if (!definedMessages[localeId]) definedMessages[localeId] = messages[localeId];
 		}
 
+		Locale.loaded = true;
 		Locale.apply(definedMessages);
 	});
 });

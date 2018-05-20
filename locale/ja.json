@@ -10,12 +10,19 @@
 	"common.finish": "処理が完了しました",
 	"common.abort": "この処理は中断されました",
 
+	"error.NotFoundApplication": [
+		"インスタンスのアプリ情報と整合性が取れないため、一旦ログアウトしました。",
+		"お手数お掛けしますが、再ログインをお願い致します。",
+		"",
+		"エラーコード: NotFoundApplication"
+	],
+
 	"header.languages": "言語",
 
 	"signInPanel.details": "MastodonRaterをお使いになる前に、Mastodonのアカウントでログインしてください。",
 	"signInPanel.instance": ["所属インスタンス(ex: <A Href = 'https://itabashi.0j0.jp' Target = '_blank'>https://itabashi.0j0.jp</A>)"],
-	"signInPanel.error.invalidUrl": "不正なURLです。",
-	"signInPanel.error.invalidInstance": "入力されたURLはMastodonインスタンスではありません。",
+	"signInPanel.error.InvalidUrl": "不正なURLです。",
+	"signInPanel.error.InvalidInstance": "入力されたURLはMastodonインスタンスではありません。",
 
 	"controlPanel.details": [
 		"MastodonRaterへようこそ！",
