@@ -1,5 +1,7 @@
 const SITEURL = location.href.replace(location.search, "");
 
+const languagesBtnOnHeader = document.getElementById("header-languages");
+const languagesBtnOnSidebar = document.getElementById("sidebar-languages");
 const signOutBtnOnHeader = document.getElementById("header-signOut");
 const signOutBtnOnSidebar = document.getElementById("sidebar-signOut");
 const signInPanel = document.getElementById("signInPanel");
@@ -32,6 +34,15 @@ window.addEventListener("DOMContentLoaded", () => {
 });
 
 window.addEventListener("DOMContentLoaded", () => {
+	[languagesBtnOnHeader, languagesBtnOnSidebar].forEach(languagesBtn => {
+		languagesBtn.querySelectorAll("Li > A").forEach(lang => {
+			lang.addEventListener("click", () => {
+				cookieStore.set("MR-lang", lang.getAttribute("Lang"));
+				location.href = SITEURL;
+			});
+		});
+	});
+
 	[signOutBtnOnHeader, signOutBtnOnSidebar].forEach(signOutBtn => {
 		signOutBtn.addEventListener("click", () => {
 			cookieStore.set("MR-instance", "");
