@@ -44,31 +44,18 @@ window.addEventListener("DOMContentLoaded", () => {
 			if (res.exists) {
 				return fetch(`api/app?instance=${instance}&redirectTo=${SITEURL}`).then(res => res.json());
 			} else {
-				return new Promise((resolve, reject) => {
-					DOM.xhr({
-						type: "POST",
-						url: "api/app",
-						resType: "json",
-						doesSync: true,
+				return fetch("api/app", {
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+		
+					body: JSON.stringify({
+						instance,
+						redirectTo: SITEURL
+					}),
+				}).then(res => res.json()).then(res => {
+					if (res.error) throw res.error;
 
-						headers: { "Content-Type": "application/json" },
-
-						data: JSON.stringify({
-							instance,
-							redirectTo: SITEURL
-						}),
-
-						onLoad (event) {
-							const { status, response } = event.target;
-
-							if (status == 400) {
-								reject(response.error);
-								return;
-							}
-
-							resolve(response);
-						}
-					});
+					return res;
 				});
 			}
 		}).catch(error => {
@@ -92,29 +79,21 @@ window.addEventListener("DOMContentLoaded", () => {
 		tootRater.querySelector(".secondary-content.badge").classList.remove("disabled");
 		Logger.log(definedMessages["common.running"]);
 
-		DOM.xhr({
-			type: "POST",
-			url: "api/feature/TootRater",
-			resType: "json",
-			doesSync: true,
-
+		fetch("api/feature/TootRater", {
+			method: "POST",
 			headers: { "Content-Type": "application/json" },
 
-			data: JSON.stringify({
+			body: JSON.stringify({
 				instance: cookieStore.get("MR-instance"),
 				token: cookieStore.get("MR-token"),
 				privacy: cookieStore.get("MR-privacy")
 			}),
+		}).then(res => res.json()).then(res => {
+			if (res.error) throw res.error;
 
-			onLoad (event) {
-				const { status, response } = event.target;
-
-				if (status == 400) throw response.error;
-				
-				tootRaterBtn.classList.remove("disabled");
-				tootRater.querySelector(".secondary-content.badge").classList.add("disabled");
-				Logger.log(definedMessages["common.finish"]);
-			}
+			tootRaterBtn.classList.remove("disabled");
+			tootRater.querySelector(".secondary-content.badge").classList.add("disabled");
+			Logger.log(definedMessages["common.finish"]);
 		});
 	});
 
@@ -125,29 +104,21 @@ window.addEventListener("DOMContentLoaded", () => {
 		tpd.querySelector(".secondary-content.badge").classList.remove("disabled");
 		Logger.log(definedMessages["common.running"]);
 
-		DOM.xhr({
-			type: "POST",
-			url: "api/feature/TPD",
-			resType: "json",
-			doesSync: true,
-
+		fetch("api/feature/TPD", {
+			method: "POST",
 			headers: { "Content-Type": "application/json" },
 
-			data: JSON.stringify({
+			body: JSON.stringify({
 				instance: cookieStore.get("MR-instance"),
 				token: cookieStore.get("MR-token"),
 				privacy: cookieStore.get("MR-privacy")
 			}),
+		}).then(res => res.json()).then(res => {
+			if (res.error) throw res.error;
 
-			onLoad (event) {
-				const { status, response } = event.target;
-
-				if (status == 400) throw response.error;
-				
-				tpdBtn.classList.remove("disabled");
-				tpd.querySelector(".secondary-content.badge").classList.add("disabled");
-				Logger.log(definedMessages["common.finish"]);
-			}
+			tpdBtn.classList.remove("disabled");
+			tpd.querySelector(".secondary-content.badge").classList.add("disabled");
+			Logger.log(definedMessages["common.finish"]);
 		});
 	});
 
@@ -160,66 +131,50 @@ window.addEventListener("DOMContentLoaded", () => {
 
 		let today = new Date();
 
-		DOM.xhr({
-			type: "POST",
-			url: "api/feature/RelevanceAnalyzer",
-			resType: "json",
-			doesSync: true,
-
+		fetch("api/feature/RelevanceAnalyzer", {
+			method: "POST",
 			headers: { "Content-Type": "application/json" },
 
-			data: JSON.stringify({
+			body: JSON.stringify({
 				instance: cookieStore.get("MR-instance"),
 				token: cookieStore.get("MR-token"),
 				privacy: cookieStore.get("MR-privacy"),
 				dateRange: new Date(today.getFullYear(), today.getMonth(), today.getDate() - RARangeConfirmerRange.value).getTime(),
 				isImmediately: RARangeConfirmerSkipConfirm.checked
 			}),
+		}).then(res => res.json()).then(res => {
+			if (res.error) throw res.error;
 
-			onLoad (event) {
-				const { status, response } = event.target;
+			if (!res.isImmediately) {
+				RARankingConfirmerContent.textContent = res.ranking;
+				RARankingConfirmer.M_Modal.open();
 
-				if (status == 400) throw response.error;
-
-				if (!response.isImmediately) {
-					RARankingConfirmerContent.textContent = response.ranking;
-					RARankingConfirmer.M_Modal.open();
-
-					return;
-				}
-				
-				RA.querySelector("A.secondary-content").classList.remove("disabled");
-				RA.querySelector(".secondary-content.badge").classList.add("disabled");
-				Logger.log(definedMessages["common.finish"]);
+				return;
 			}
+			
+			RA.querySelector("A.secondary-content").classList.remove("disabled");
+			RA.querySelector(".secondary-content.badge").classList.add("disabled");
+			Logger.log(definedMessages["common.finish"]);
 		});
 	});
 
 	RARankingConfirmerLaunch.addEventListener("click", () => {
-		DOM.xhr({
-			type: "POST",
-			url: "api/toot",
-			resType: "json",
-			doesSync: true,
-
+		fetch("api/toot", {
+			method: "POST",
 			headers: { "Content-Type": "application/json" },
 
-			data: JSON.stringify({
+			body: JSON.stringify({
 				instance: cookieStore.get("MR-instance"),
 				token: cookieStore.get("MR-token"),
 				privacy: cookieStore.get("MR-privacy"),
 				status: RARankingConfirmerContent.textContent
 			}),
-
-			onLoad (event) {
-				const { status, response } = event.target;
-
-				if (status == 400) throw response.error;
-
-				RA.querySelector("A.secondary-content").classList.remove("disabled");
-				RA.querySelector(".secondary-content.badge").classList.add("disabled");
-				Logger.log(definedMessages["common.finish"]);
-			}
+		}).then(res => res.json()).then(res => {
+			if (res.error) throw res.error;
+			
+			RA.querySelector("A.secondary-content").classList.remove("disabled");
+			RA.querySelector(".secondary-content.badge").classList.add("disabled");
+			Logger.log(definedMessages["common.finish"]);
 		});
 	});
 
