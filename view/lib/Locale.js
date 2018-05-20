@@ -67,35 +67,12 @@ class Locale {
 
 let cookieStore = new CookieStore();
 let definedMessages = {};
-let LANG = "";
 
 if (!cookieStore.has("MR-lang")) cookieStore.set("MR-lang", "en");
 if (!cookieStore.has("MR-privacy")) cookieStore.set("MR-privacy", "public");
 
 window.addEventListener("DOMContentLoaded", () => {
-	let querys = new URLSearchParams(location.search);
-
-	if (querys.has("lang")) {
-		LANG = querys.get("lang");
-		cookieStore.set("MR-lang", querys.get("lang"));
-
-		Locale.load(LANG).then(messages => {
-			definedMessages = messages;
-			return Locale.load();
-		}).then(messages => {
-			for (let localeId in messages) {
-				if (!definedMessages[localeId]) definedMessages[localeId] = messages[localeId];
-			}
-
-			Locale.apply(definedMessages);
-		});
-
-		return;
-	}
-
-	LANG = Locale.currentLang;
-	
-	Locale.load(LANG).then(messages => {
+	Locale.load(Locale.currentLang).then(messages => {
 		definedMessages = messages;
 		return Locale.load();
 	}).then(messages => {
