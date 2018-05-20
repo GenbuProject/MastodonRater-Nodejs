@@ -34,7 +34,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
 	signInBtn.addEventListener("click", () => {
 		if (!instanceInputter.value || !instanceInputter.checkValidity()) {
-			M.toast({ html: definedMessages["signInPanel.error.invalidUrl"] });
+			Logger.log(definedMessages["signInPanel.error.InvalidUrl"]);
 			return;
 		}
 
@@ -72,7 +72,7 @@ window.addEventListener("DOMContentLoaded", () => {
 				});
 			}
 		}).catch(error => {
-			M.toast({ html: definedMessages["signInPanel.error.invalidInstance"] });
+			Logger.log(definedMessages["signInPanel.error.InvalidInstance"]);
 			throw error;
 		}).then(info => {
 			cookieStore.set("MR-instance", instance);
@@ -90,7 +90,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
 		tootRaterBtn.classList.add("disabled");
 		tootRater.querySelector(".secondary-content.badge").classList.remove("disabled");
-		M.toast({ html: definedMessages["common.running"] });
+		Logger.log(definedMessages["common.running"]);
 
 		DOM.xhr({
 			type: "POST",
@@ -113,7 +113,7 @@ window.addEventListener("DOMContentLoaded", () => {
 				
 				tootRaterBtn.classList.remove("disabled");
 				tootRater.querySelector(".secondary-content.badge").classList.add("disabled");
-				M.toast({ html: definedMessages["common.finish"] });
+				Logger.log(definedMessages["common.finish"]);
 			}
 		});
 	});
@@ -123,7 +123,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
 		tpdBtn.classList.add("disabled");
 		tpd.querySelector(".secondary-content.badge").classList.remove("disabled");
-		M.toast({ html: definedMessages["common.running"] });
+		Logger.log(definedMessages["common.running"]);
 
 		DOM.xhr({
 			type: "POST",
@@ -146,7 +146,7 @@ window.addEventListener("DOMContentLoaded", () => {
 				
 				tpdBtn.classList.remove("disabled");
 				tpd.querySelector(".secondary-content.badge").classList.add("disabled");
-				M.toast({ html: definedMessages["common.finish"] });
+				Logger.log(definedMessages["common.finish"]);
 			}
 		});
 	});
@@ -156,7 +156,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
 		RA.querySelector("A.secondary-content").classList.add("disabled");
 		RA.querySelector(".secondary-content.badge").classList.remove("disabled");
-		M.toast({ html: definedMessages["common.running"] });
+		Logger.log(definedMessages["common.running"]);
 
 		let today = new Date();
 
@@ -190,7 +190,7 @@ window.addEventListener("DOMContentLoaded", () => {
 				
 				RA.querySelector("A.secondary-content").classList.remove("disabled");
 				RA.querySelector(".secondary-content.badge").classList.add("disabled");
-				M.toast({ html: definedMessages["common.finish"] });
+				Logger.log(definedMessages["common.finish"]);
 			}
 		});
 	});
@@ -218,7 +218,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
 				RA.querySelector("A.secondary-content").classList.remove("disabled");
 				RA.querySelector(".secondary-content.badge").classList.add("disabled");
-				M.toast({ html: definedMessages["common.finish"] });
+				Logger.log(definedMessages["common.finish"]);
 			}
 		});
 	});
@@ -226,13 +226,25 @@ window.addEventListener("DOMContentLoaded", () => {
 	RARankingConfirmerCancel.addEventListener("click", () => {
 		RA.querySelector("A.secondary-content").classList.remove("disabled");
 		RA.querySelector(".secondary-content.badge").classList.add("disabled");
-		M.toast({ html: definedMessages["common.abort"] });
+		Logger.log(definedMessages["common.abort"]);
 	});
 });
 
 window.addEventListener("DOMContentLoaded", () => {
+	const querys = new URLSearchParams(location.search);
 	const instance = cookieStore.get("MR-instance");
 	const token = cookieStore.get("MR-token");
+
+	if (querys.has("code") && instance) {
+		fetch(`api/app?instance=${instance}&redirectTo=${SITEURL}`).then(res => res.json()).then(info => {
+			const { clientId, secretId, redirectTo } = info;
+
+			return fetch(`api/token?instance=${instance}&clientId=${clientId}&secretId=${secretId}&code=${querys.get("code")}&redirectTo=${redirectTo}`).then(res => res.json());
+		}).then(res => {
+			cookieStore.set("MR-token", res.accessToken);
+			location.href = SITEURL;
+		});
+	}
 
 	if (instance && token) {
 		fetch(`api/tokenValidate?instance=${instance}&token=${token}`).then(res => res.json()).then(info => {
@@ -249,7 +261,7 @@ window.addEventListener("DOMContentLoaded", () => {
 							body: JSON.stringify({ instance })
 						});
 					}
-				}).then(() => location.href = SITEURL);
+				}).then(() => location.href = SITEURL + "?error=error.NotFoundApplication");
 			} else {
 				controlPanel.classList.remove("disabled");
 				signOutBtnOnHeader.classList.remove("disabled");
@@ -265,18 +277,8 @@ window.addEventListener("DOMContentLoaded", () => {
 	privacySelector.namedItem(`privacy.${cookieStore.get("MR-privacy")}`).selected = true;
 });
 
-window.addEventListener("DOMContentLoaded", () => {
+Locale.on("load").then(messages => {
 	const querys = new URLSearchParams(location.search);
-	const instance = cookieStore.get("MR-instance");
 
-	if (querys.has("code") && instance) {
-		fetch(`api/app?instance=${instance}&redirectTo=${SITEURL}`).then(res => res.json()).then(info => {
-			const { clientId, secretId, redirectTo } = info;
-
-			return fetch(`api/token?instance=${instance}&clientId=${clientId}&secretId=${secretId}&code=${querys.get("code")}&redirectTo=${redirectTo}`).then(res => res.json());
-		}).then(res => {
-			cookieStore.set("MR-token", res.accessToken);
-			location.href = SITEURL;
-		});
-	}
+	if (querys.has("error")) Logger.error(definedMessages[querys.get("error")]);
 });
