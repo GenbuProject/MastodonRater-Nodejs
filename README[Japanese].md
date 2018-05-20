@@ -1,7 +1,6 @@
 # MastodonRater
 
 [![Build Status](https://travis-ci.org/GenbuProject/MastodonRater-Nodejs.svg)](https://travis-ci.org/GenbuProject/MastodonRater-Nodejs)
-[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
 マストドンのマストドナーによるマストドナーのための統計ツール
 
@@ -9,8 +8,7 @@
 * [English | 英語](/README.md)
 
 ## 概要 | Overview
-当サービスは、MastodonAPIを利用して様々な指標を算出するツールです。<Br />
-Herokuへのデプロイ方法は[こちら](/DeployToHeroku.md)を参照してください。
+当サービスは、MastodonAPIを利用して様々な指標を算出するツールです。
 
 ## 機能一覧 | Features
 ### Toot Rater
