@@ -68,7 +68,7 @@ class Locale {
 let cookieStore = new CookieStore();
 let definedMessages = {};
 
-if (!cookieStore.has("MR-lang")) cookieStore.set("MR-lang", "en");
+if (!cookieStore.has("MR-lang")) cookieStore.set("MR-lang", navigator.language || "en");
 if (!cookieStore.has("MR-privacy")) cookieStore.set("MR-privacy", "public");
 
 window.addEventListener("DOMContentLoaded", () => {
