@@ -11,9 +11,13 @@ class Locale {
 		if (!eventname) throw new TypeError("An argument, 'eventname' is required.");
 
 		return new Promise(resolve => {
+			let detector = null;
+
 			switch (eventname) {
+				default:
+					throw new TypeError("An argument, 'eventname' is not acceptable.");
 				case "load":
-					let detector = setInterval(() => {
+					detector = setInterval(() => {
 						if (Locale.loaded) {
 							clearInterval(detector);
 							resolve(definedMessages);
@@ -26,7 +30,7 @@ class Locale {
 	}
 
 	static load (languageCode = "en") {
-		return fetch(`locale/${languageCode}.json`).catch(error => fetch("locale/en.json")).then(response => response.json()).then(messages => messages);
+		return fetch(`locale/${languageCode}.json`).catch(() => fetch("locale/en.json")).then(response => response.json()).then(messages => messages);
 	}
 
 	static apply (messages = {}) {
@@ -84,3 +88,7 @@ window.addEventListener("DOMContentLoaded", () => {
 		Locale.apply(definedMessages);
 	});
 });
+
+
+
+/* global M, CookieStore */

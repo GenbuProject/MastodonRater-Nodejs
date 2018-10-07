@@ -236,7 +236,7 @@ window.addEventListener("DOMContentLoaded", () => {
 							body: JSON.stringify({ instance })
 						});
 					}
-				}).then(() => location.href = SITEURL + "?error=error.NotFoundApplication");
+				}).then(() => location.href = `${SITEURL}?error=error.NotFoundApplication`);
 			} else {
 				controlPanel.classList.remove("disabled");
 				signOutBtnOnHeader.classList.remove("disabled");
@@ -252,8 +252,12 @@ window.addEventListener("DOMContentLoaded", () => {
 	privacySelector.namedItem(`privacy.${cookieStore.get("MR-privacy")}`).selected = true;
 });
 
-Locale.on("load").then(messages => {
+Locale.on("load").then(() => {
 	const querys = new URLSearchParams(location.search);
 
 	if (querys.has("error")) Logger.error(definedMessages[querys.get("error")]);
 });
+
+
+
+/* global M, Locale, cookieStore, definedMessages, Logger */

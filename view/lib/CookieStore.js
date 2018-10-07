@@ -4,7 +4,7 @@ class CookieStore {
 		setInterval(() => this.rawCookie = document.cookie);
 	}
 
-	get rawCookie () { return this._rawCookie; }
+	get rawCookie () { return this._rawCookie }
 	set rawCookie (value = "") {
 		this._rawCookie = value;
 

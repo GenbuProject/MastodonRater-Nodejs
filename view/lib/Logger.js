@@ -11,3 +11,7 @@ class Logger {
 		M.toast({ html: message, classes: "red darken-2", displayLength: 10000 });
 	}
 }
+
+
+
+/* global M */
