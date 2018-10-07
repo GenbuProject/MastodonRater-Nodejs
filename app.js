@@ -147,7 +147,12 @@ let app = express();
 				status,
 				visibility: privacy || "public"
 			}).then(info => {
+				if (info.resp.statusCode !== 200) return Promise.reject(info);
+				
 				res.end(R.API_END({ status: info.data }));
+			}).catch(info => {
+				res.status(info.resp.statusCode).end(R.API_END_WITH_ERROR(new Error(info.data.error)));
+				throw new Error(info.data.error);
 			});
 	});
 
@@ -168,10 +173,13 @@ let app = express();
 
 		let Mstdn = new Mastodon({ api_url: `${instance}/api/v1/`, access_token: token });
 			Mstdn.get("instance").then(info => {
-				serverStatuses = info.data.stats.status_count;
+				if (info.resp.statusCode !== 200) return Promise.reject(info);
 
+				serverStatuses = info.data.stats.status_count;
 				return Mstdn.get("accounts/verify_credentials");
 			}).then(info => {
+				if (info.resp.statusCode !== 200) return Promise.reject(info);
+
 				userStatuses = info.data.statuses_count;
 				rate = (userStatuses / serverStatuses * 100).toFixed(3);
 
@@ -186,8 +194,13 @@ let app = express();
 
 					visibility: privacy || "public"
 				});
-			}).then(() => {
+			}).then(info => {
+				if (info.resp.statusCode !== 200) return Promise.reject(info);
+
 				res.end(R.API_END({ rate }));
+			}).catch(info => {
+				res.status(info.resp.statusCode).end(R.API_END_WITH_ERROR(new Error(info.data.error)));
+				throw new Error(info.data.error);
 			});
 	});
 
@@ -207,6 +220,8 @@ let app = express();
 
 		let Mstdn = new Mastodon({ api_url: `${instance}/api/v1/`, access_token: token });
 			Mstdn.get("accounts/verify_credentials").then(info => {
+				if (info.resp.statusCode !== 200) return Promise.reject(info);
+
 				let nowTime = new Date().getTime(),
 					createdAt = new Date(info.data.created_at).getTime();
 
@@ -225,8 +240,13 @@ let app = express();
 
 					visibility: privacy || "public"
 				});
-			}).then(() => {
+			}).then(info => {
+				if (info.resp.statusCode !== 200) return Promise.reject(info);
+
 				res.end(R.API_END({ days, tpd }));
+			}).catch(info => {
+				res.status(info.resp.statusCode).end(R.API_END_WITH_ERROR(new Error(info.data.error)));
+				throw new Error(info.data.error);
 			});
 	});
 
@@ -256,6 +276,8 @@ let app = express();
 		let Mstdn = new Mastodon({ api_url: `${instance}/api/v1/`, access_token: token });
 		let mstdnHandler = new APIHandler(Mstdn);
 			Mstdn.get("accounts/verify_credentials").then(info => {
+				if (info.resp.statusCode !== 200) return Promise.reject(info);
+
 				me = info.data;
 
 				if (me.following_count > me.followers_count) {
@@ -322,8 +344,13 @@ let app = express();
 				}
 					
 				res.end(R.API_END({ ranking: tootContent, isImmediately: false }));
-			}).then(() => {
+			}).then(info => {
+				if (info.resp.statusCode !== 200) return Promise.reject(info);
+				
 				res.end(R.API_END({ ranking, isImmediately: true }));
+			}).catch(info => {
+				res.status(info.resp.statusCode).end(R.API_END_WITH_ERROR(new Error(info.data.error)));
+				throw new Error(info.data.error);
 			});
 	});
 
