@@ -42,7 +42,8 @@
 
 	"relevanceAnalyzer.rangeConfirmer.details": [
 		"取得範囲を選択して下さい。",
-		"<Span Class = 'red-text'>※取得範囲が長いほど処理に時間が掛かります！！！</Span>"
+		"<Span Class = 'red-text'>※取得範囲が長いほど処理に時間が掛かります！！！</Span>",
+		"<Span Class = 'red-text'>※集中してAPIにアクセスするため、取得中にAPI制限に抵触する可能性があります。</Span>"
 	],
 
 	"relevanceAnalyzer.rangeConfirmer.range": "取得範囲",

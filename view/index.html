@@ -163,12 +163,13 @@
 							<Div Class = "modal-content">
 								<P Locale-Message = "relevanceAnalyzer.rangeConfirmer.details">
 									Please select date range, and it will be used to get information.<Br />
-									<Span Class = 'red-text'>(* Longer the range, longer the time you'll spend!)</Span>
+									<Span Class = 'red-text'>(* The longer range, the longer time you'll spend!)</Span><Br />
+									<Span Class = 'red-text'>(* This feature may cause exceeding an API rate limit because of using one many times for analyzing.)</Span>
 								</P>
 								
 								<Div Class = "input-field">
 									<Select ID = "feature-relevanceAnalyzer-rangeConfirmer-range">
-										<Option Value = "0" Locale-Message = "relevanceAnalyzer.rangeConfirmer.range0" Selected>Today only</Option>
+										<Option Value = "0" Locale-Message = "relevanceAnalyzer.rangeConfirmer.range0" Selected>Only today</Option>
 										<Option Value = "1" Locale-Message = "relevanceAnalyzer.rangeConfirmer.range1">Between today and yesterday</Option>
 										<Option Value = "2" Locale-Message = "relevanceAnalyzer.rangeConfirmer.range2">Between today to 2 days before</Option>
 										<Option Value = "3" Locale-Message = "relevanceAnalyzer.rangeConfirmer.range3">Between today to 3 days before</Option>

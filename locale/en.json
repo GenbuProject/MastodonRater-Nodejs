@@ -42,11 +42,12 @@
 
 	"relevanceAnalyzer.rangeConfirmer.details": [
 		"Please select date range, and it will be used to get information.",
-		"<Span Class = 'red-text'>(*Longer the range, longer the time you'll spend!)</Span>"
+		"<Span Class = 'red-text'>(* The longer range, the longer time you'll spend!)</Span>",
+		"<Span Class = 'red-text'>(* This feature may cause exceeding an API rate limit because of using one many times for analyzing.)</Span>"
 	],
 	
 	"relevanceAnalyzer.rangeConfirmer.range": "Date range",
-	"relevanceAnalyzer.rangeConfirmer.range0": "Today only",
+	"relevanceAnalyzer.rangeConfirmer.range0": "Only today",
 	"relevanceAnalyzer.rangeConfirmer.range1": "Between today and yesterday",
 	"relevanceAnalyzer.rangeConfirmer.range2": "Between today to 2 days before",
 	"relevanceAnalyzer.rangeConfirmer.range3": "Between today to 3 days before",

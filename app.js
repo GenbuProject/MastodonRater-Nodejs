@@ -244,7 +244,7 @@ let app = express();
 
 		if (!dateRange) {
 			let today = new Date();
-				dateRange = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+			dateRange = new Date(today.getFullYear(), today.getMonth(), today.getDate());
 		} else if (Number.isInteger(dateRange)) {
 			dateRange = new Date(dateRange);
 		}
