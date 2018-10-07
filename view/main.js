@@ -109,7 +109,10 @@ window.addEventListener("DOMContentLoaded", () => {
 				privacy: cookieStore.get("MR-privacy")
 			}),
 		}).then(res => res.json()).then(res => {
-			if (res.error) throw res.error;
+			if (res.error) {
+				Logger.error(definedMessages["error"].join("<Br />").replace("${ERRORCODE}", res.error));
+				throw res.error;
+			}
 
 			tootRaterBtn.classList.remove("disabled");
 			tootRater.querySelector(".secondary-content.badge").classList.add("disabled");
@@ -134,7 +137,10 @@ window.addEventListener("DOMContentLoaded", () => {
 				privacy: cookieStore.get("MR-privacy")
 			}),
 		}).then(res => res.json()).then(res => {
-			if (res.error) throw res.error;
+			if (res.error) {
+				Logger.error(definedMessages["error"].join("<Br />").replace("${ERRORCODE}", res.error));
+				throw res.error;
+			}
 
 			tpdBtn.classList.remove("disabled");
 			tpd.querySelector(".secondary-content.badge").classList.add("disabled");
@@ -163,7 +169,10 @@ window.addEventListener("DOMContentLoaded", () => {
 				isImmediately: RARangeConfirmerSkipConfirm.checked
 			}),
 		}).then(res => res.json()).then(res => {
-			if (res.error) throw res.error;
+			if (res.error) {
+				Logger.error(definedMessages["error"].join("<Br />").replace("${ERRORCODE}", res.error));
+				throw res.error;
+			}
 
 			if (!res.isImmediately) {
 				RARankingConfirmerContent.textContent = res.ranking;
@@ -190,7 +199,10 @@ window.addEventListener("DOMContentLoaded", () => {
 				status: RARankingConfirmerContent.textContent
 			}),
 		}).then(res => res.json()).then(res => {
-			if (res.error) throw res.error;
+			if (res.error) {
+				Logger.error(definedMessages["error"].join("<Br />").replace("${ERRORCODE}", res.error));
+				throw res.error;
+			}
 			
 			RA.querySelector("A.secondary-content").classList.remove("disabled");
 			RA.querySelector(".secondary-content.badge").classList.add("disabled");

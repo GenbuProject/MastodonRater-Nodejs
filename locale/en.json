@@ -10,6 +10,13 @@
 	"common.finish": "Current process has done",
 	"common.abort": "Current process has aborted!",
 
+	"error": [
+		"Current process has aborted with error!",
+		"",
+		"<Error>",
+		"${ERRORCODE}"
+	],
+
 	"error.NotFoundApplication": [
 		"You've signed out because of lack of app's information.",
 		"Please sign in again, I'm sorry.",
