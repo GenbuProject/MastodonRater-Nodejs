@@ -90,7 +90,7 @@ let app = express();
 					return Mastodon.getAuthorizationUrl(clientId, secretId, instance, "read write", redirectTo);
 				}).then(authUrl => {
 					res.end(R.API_END(Object.assign(appInfo, { authUrl })));
-				}).catch(error => {
+				}).catch(() => {
 					res.status(400).end(R.API_END_WITH_ERROR(new URIError(`${instance} is not an instance.`)));
 				});
 			}
@@ -114,7 +114,7 @@ let app = express();
 
 		Mastodon.getAccessToken(clientId, secretId, code, instance, redirectTo).then(accessToken => {
 			res.end(R.API_END({ accessToken }));
-		}).catch(error => {
+		}).catch(() => {
 			res.status(400).end(R.API_END_WITH_ERROR(new TypeError("Any queries are invalid.")));
 			return;
 		});
