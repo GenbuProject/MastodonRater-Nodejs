@@ -1,4 +1,3 @@
-const dotenv = require("dotenv");
 const express = require("express");
 const bodyParser = require("body-parser");
 const Mastodon = require("mastodon-api");
@@ -7,7 +6,11 @@ const APIHandler = require("./lib/APIHandler");
 const R = require("./lib/Resources");
 
 //I'm for only developing!
-if (dotenv) dotenv.config();
+try {
+	require("dotenv").config();
+} catch (error) {
+	null;
+}
 
 
 
@@ -346,7 +349,7 @@ let app = express();
 				res.end(R.API_END({ ranking: tootContent, isImmediately: false }));
 			}).then(info => {
 				if (info.resp.statusCode !== 200) return Promise.reject(info);
-				
+
 				res.end(R.API_END({ ranking, isImmediately: true }));
 			}).catch(info => {
 				res.status(info.resp.statusCode).end(R.API_END_WITH_ERROR(new Error(info.data.error)));
