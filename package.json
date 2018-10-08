@@ -1,6 +1,6 @@
 {
 	"name": "mastodon-rater",
-	"version": "1.1.2",
+	"version": "1.1.3",
 	"description": "An analyzer of mastodon, for the users, by the user",
 	"keywords": [
 		"MastodonRater",
