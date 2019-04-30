@@ -139,7 +139,7 @@ let app = express();
 	 * Toots with provided contents
 	 */
 	app.post("/api/toot", (req, res) => {
-		const { instance, token, privacy, status } = req.body;
+		const { instance, token, privacy, status, spoiler_text } = req.body;
 
 		if (!instance || !token) {
 			res.status(400).end(R.API_END_WITH_ERROR(new TypeError("2 payloads, 'instance' and 'token' are required.")));
@@ -148,6 +148,7 @@ let app = express();
 		let Mstdn = new Mastodon({ api_url: `${instance}/api/v1/`, access_token: token });
 			Mstdn.post("statuses", {
 				status,
+				spoiler_text,
 				visibility: privacy || "public"
 			}).then(info => {
 				if (info.resp.statusCode !== 200) return Promise.reject(info);
@@ -342,6 +343,7 @@ let app = express();
 				if (isImmediately) {
 					return Mstdn.post("statuses", {
 						status: tootContent,
+						spoiler_text: "#RelevanceAnalyzer | #統計さん",
 						visibility: privacy || "public"
 					});
 				}

@@ -196,7 +196,8 @@ window.addEventListener("DOMContentLoaded", () => {
 				instance: cookieStore.get("MR-instance"),
 				token: cookieStore.get("MR-token"),
 				privacy: cookieStore.get("MR-privacy"),
-				status: RARankingConfirmerContent.textContent
+				status: RARankingConfirmerContent.textContent,
+				spoiler_text: "#RelevanceAnalyzer | #統計さん"
 			}),
 		}).then(res => res.json()).then(res => {
 			if (res.error) {
